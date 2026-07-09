@@ -23,6 +23,8 @@ const heroNavItems = [
 ] as const;
 
 const publicBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const heroVideoSrc = `${publicBasePath}/videos/hero-kesia-scroll.mp4`;
+const heroPosterSrc = `${publicBasePath}/videos/hero-kesia-poster.jpg`;
 
 type ScrollHeroExperienceProps = {
   bookingPath: string;
@@ -93,6 +95,7 @@ export function ScrollHeroExperience({
       video.pause();
     };
 
+    video.load();
     setVideoDuration();
     video.addEventListener("loadedmetadata", setVideoDuration);
 
@@ -253,7 +256,8 @@ export function ScrollHeroExperience({
       >
         <video
           ref={videoRef}
-          src={`${publicBasePath}/videos/hero-kesia-final.mp4`}
+          src={heroVideoSrc}
+          poster={heroPosterSrc}
           className="h-full w-auto max-w-none scale-[1.006] transform-gpu object-contain object-center"
           style={{ willChange: "transform" }}
           muted
