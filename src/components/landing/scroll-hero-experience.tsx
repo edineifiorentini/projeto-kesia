@@ -228,18 +228,18 @@ export function ScrollHeroExperience({
 
       <div
         ref={copyRef}
-        className="absolute left-1/2 top-[126px] z-10 w-full max-w-[1760px] -translate-x-1/2 px-5 text-center sm:px-6 lg:top-[136px] lg:px-8"
+        className="absolute left-1/2 top-[112px] z-10 w-full max-w-[1760px] -translate-x-1/2 px-5 text-center sm:top-[126px] sm:px-6 lg:top-[136px] lg:px-8"
       >
         <h1
           aria-label="Porque todo grande dia merece um cabelo à altura da sua história."
           className={clsx(
             frauncesClassName,
-            "mx-auto max-w-[min(1760px,calc(100vw-3rem))] whitespace-nowrap text-[clamp(1.42rem,2.22vw,2.72rem)] font-bold leading-none tracking-normal text-[#111111] max-lg:whitespace-normal max-sm:text-[2.08rem]",
+            "mx-auto max-w-[min(1760px,calc(100vw-3rem))] whitespace-nowrap text-[clamp(1.42rem,2.22vw,2.72rem)] font-bold leading-none tracking-normal text-[#111111] max-lg:whitespace-normal max-sm:max-w-[350px] max-sm:text-[clamp(1.55rem,7vw,1.88rem)] max-sm:leading-[0.98]",
           )}
         >
           Porque todo grande dia merece um cabelo à altura da sua história.
         </h1>
-        <p className="mx-auto mt-4 max-w-[1180px] text-[0.92rem] font-semibold leading-6 text-[#6d6d6d] sm:text-[0.98rem] max-lg:max-w-[720px]">
+        <p className="mx-auto mt-4 max-w-[1180px] text-[0.92rem] font-semibold leading-6 text-[#6d6d6d] sm:text-[0.98rem] max-lg:max-w-[720px] max-sm:mt-3 max-sm:max-w-[335px] max-sm:overflow-hidden max-sm:text-[0.76rem] max-sm:leading-5 max-sm:[-webkit-box-orient:vertical] max-sm:[-webkit-line-clamp:2] max-sm:[display:-webkit-box]">
           <span className="block whitespace-nowrap max-lg:whitespace-normal">
             Do primeiro olhar ao último registro, cada detalhe importa. Penteados, coloração, lavagem, escova e finalização
           </span>
@@ -252,7 +252,7 @@ export function ScrollHeroExperience({
 
       <div
         ref={videoWrapRef}
-        className="pointer-events-none absolute inset-x-0 bottom-0 top-[252px] z-[1] flex origin-bottom transform-gpu items-end justify-center overflow-hidden bg-white will-change-transform sm:top-[248px] lg:top-[255px]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 top-[322px] z-[1] flex origin-bottom transform-gpu items-end justify-center overflow-hidden bg-white will-change-transform sm:top-[248px] lg:top-[255px]"
       >
         <video
           ref={videoRef}
