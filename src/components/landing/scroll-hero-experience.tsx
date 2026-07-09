@@ -258,8 +258,8 @@ export function ScrollHeroExperience({
           ref={videoRef}
           src={heroVideoSrc}
           poster={heroPosterSrc}
-          className="h-full w-auto max-w-none scale-[1.006] transform-gpu object-contain object-center"
-          style={{ willChange: "transform" }}
+          className="h-[98%] w-auto max-w-none scale-100 transform-gpu object-contain object-center sm:h-full sm:scale-[1.006]"
+          style={{ clipPath: "inset(0 2px 0 0)", willChange: "transform" }}
           muted
           controls={false}
           playsInline
