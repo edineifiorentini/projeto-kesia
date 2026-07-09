@@ -1,0 +1,817 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Locale {
+  PT_BR @map("pt-BR")
+  EN_US @map("en-US")
+  ES_ES @map("es-ES")
+}
+
+enum Currency {
+  BRL
+  USD
+  EUR
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  BUSINESS_OWNER
+  MANAGER
+  RECEPTIONIST
+  PROFESSIONAL
+  INVENTORY_MANAGER
+  CLIENT
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  CONFIRMED
+  ARRIVED
+  IN_PROGRESS
+  COMPLETED
+  MISSED
+  CANCELLED
+}
+
+enum AppointmentSource {
+  MANUAL
+  ONLINE
+  CLIENT_PORTAL
+  WALK_IN
+}
+
+enum CommandStatus {
+  OPEN
+  CLOSED
+  CANCELLED
+}
+
+enum CommandItemType {
+  SERVICE
+  PRODUCT
+}
+
+enum PaymentMethod {
+  CASH
+  PIX
+  DEBIT_CARD
+  CREDIT_CARD
+  BANK_TRANSFER
+  ONLINE_PAYMENT
+}
+
+enum PaymentStatus {
+  PENDING
+  CONFIRMED
+  REFUNDED
+  CANCELLED
+}
+
+enum CommissionStatus {
+  PENDING
+  AVAILABLE
+  PAID
+  CANCELLED
+}
+
+enum StockMovementType {
+  ENTRY
+  EXIT
+  SALE
+  INTERNAL_USE
+  ADJUSTMENT
+}
+
+enum PackageStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+  FINISHED
+}
+
+enum MessageChannel {
+  WHATSAPP
+  EMAIL
+  SMS
+}
+
+enum MessageStatus {
+  DRAFT
+  SCHEDULED
+  SENT
+  FAILED
+  CANCELLED
+}
+
+model Business {
+  id                   String              @id @default(cuid())
+  name                 String
+  slug                 String              @unique
+  responsibleName      String?
+  document             String?
+  email                String?
+  logoUrl              String?
+  addressLine          String?
+  addressNumber        String?
+  addressComplement    String?
+  neighborhood         String?
+  city                 String?
+  state                String?
+  postalCode           String?
+  phone                String?
+  whatsapp             String?
+  openingHours         Json?
+  cancellationPolicy   String?
+  bookingRules         Json?
+  defaultLocale        Locale              @default(PT_BR)
+  defaultCurrency      Currency            @default(BRL)
+  defaultTimezone      String              @default("America/Sao_Paulo")
+  discountLimitPercent Int                 @default(10)
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+  appointments         Appointment[]
+  auditLogs            AuditLog[]
+  branches             Branch[]
+  cashRegisters        CashRegister[]
+  clients              Client[]
+  commands             Command[]
+  commissionPayments   CommissionPayment[]
+  commissions          Commission[]
+  expenses             Expense[]
+  expenseCategories    ExpenseCategory[]
+  marketingCampaigns   MarketingCampaign[]
+  messageTemplates     MessageTemplate[]
+  packages             Package[]
+  payments             Payment[]
+  permissions          Permission[]
+  productCategories    ProductCategory[]
+  products             Product[]
+  professionals        Professional[]
+  reviews              Review[]
+  roles                Role[]
+  sentMessages         SentMessage[]
+  serviceCategories    ServiceCategory[]
+  services             Service[]
+  settings             Setting[]
+  stockMovements       StockMovement[]
+  subscriptions        Subscription[]
+  suppliers            Supplier[]
+  translations         Translation[]
+  users                User[]
+
+  @@map("businesses")
+}
+
+model Branch {
+  id            String         @id @default(cuid())
+  businessId    String
+  name          String
+  addressLine   String?
+  city          String?
+  state         String?
+  phone         String?
+  whatsapp      String?
+  timezone      String         @default("America/Sao_Paulo")
+  active        Boolean        @default(true)
+  business      Business       @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  appointments  Appointment[]
+  cashRegisters CashRegister[]
+
+  @@index([businessId])
+  @@map("branches")
+}
+
+model User {
+  id                  String         @id @default(cuid())
+  businessId          String?
+  roleId              String?
+  email               String         @unique
+  passwordHash        String
+  name                String
+  phone               String?
+  avatarUrl           String?
+  role                UserRole       @default(RECEPTIONIST)
+  locale              Locale         @default(PT_BR)
+  timezone            String         @default("America/Sao_Paulo")
+  active              Boolean        @default(true)
+  lastLoginAt         DateTime?
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  business            Business?      @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  customRole          Role?          @relation(fields: [roleId], references: [id])
+  auditLogs           AuditLog[]
+  cashRegistersClosed CashRegister[] @relation("CashRegisterClosedBy")
+  cashRegistersOpened CashRegister[] @relation("CashRegisterOpenedBy")
+  client              Client?
+  professional        Professional?
+  sentMessages        SentMessage[]
+
+  @@index([businessId])
+  @@map("users")
+}
+
+model Role {
+  id          String           @id @default(cuid())
+  businessId  String?
+  name        String
+  systemRole  UserRole?
+  description String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  business    Business?        @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  permissions RolePermission[]
+  users       User[]
+
+  @@unique([businessId, name])
+  @@map("roles")
+}
+
+model Permission {
+  id          String           @id @default(cuid())
+  businessId  String?
+  action      String
+  subject     String
+  description String?
+  business    Business?        @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  roles       RolePermission[]
+
+  @@unique([businessId, action, subject])
+  @@map("permissions")
+}
+
+model RolePermission {
+  roleId       String
+  permissionId String
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+model Professional {
+  id                    String                @id @default(cuid())
+  businessId            String
+  userId                String?               @unique
+  displayName           String
+  bio                   String?
+  profileImageUrl       String?
+  specialties           String[]
+  workingHours          Json?
+  fixedSalaryCents      Int?
+  chairRentalCents      Int?
+  defaultCommissionRate Float                 @default(40)
+  monthlyTargetCents    Int?
+  satisfactionScore     Float?
+  active                Boolean               @default(true)
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+  business              Business              @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  user                  User?                 @relation(fields: [userId], references: [id])
+  appointments          Appointment[]
+  clientsPreferred      Client[]              @relation("PreferredProfessional")
+  commandItems          CommandItem[]
+  commissions           Commission[]
+  services              ProfessionalService[]
+
+  @@index([businessId])
+  @@map("professionals")
+}
+
+model Client {
+  id                      String          @id @default(cuid())
+  businessId              String
+  userId                  String?         @unique
+  preferredProfessionalId String?
+  name                    String
+  phone                   String
+  whatsapp                String?
+  email                   String?
+  birthday                DateTime?
+  address                 Json?
+  notes                   String?
+  allergies               String?
+  hairFormula             String?
+  photoConsent            Boolean         @default(false)
+  marketingConsent        Boolean         @default(false)
+  dataProcessingConsent   Boolean         @default(true)
+  averageTicketCents      Int             @default(0)
+  lastVisitAt             DateTime?
+  noShowCount             Int             @default(0)
+  createdAt               DateTime        @default(now())
+  updatedAt               DateTime        @updatedAt
+  business                Business        @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  preferredProfessional   Professional?   @relation("PreferredProfessional", fields: [preferredProfessionalId], references: [id])
+  user                    User?           @relation(fields: [userId], references: [id])
+  appointments            Appointment[]
+  clientPackages          ClientPackage[]
+  commands                Command[]
+  payments                Payment[]
+  reviews                 Review[]
+  sentMessages            SentMessage[]
+
+  @@index([businessId])
+  @@index([businessId, phone])
+  @@map("clients")
+}
+
+model ServiceCategory {
+  id          String    @id @default(cuid())
+  businessId  String
+  name        String
+  description String?
+  color       String?
+  active      Boolean   @default(true)
+  business    Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  services    Service[]
+
+  @@unique([businessId, name])
+  @@map("service_categories")
+}
+
+model Service {
+  id                   String                @id @default(cuid())
+  businessId           String
+  categoryId           String
+  name                 String
+  description          String?
+  priceCents           Int
+  durationMinutes      Int
+  preparationMinutes   Int                   @default(0)
+  cleanupMinutes       Int                   @default(0)
+  commissionRate       Float?
+  depositRequired      Boolean               @default(false)
+  depositCents         Int?
+  onlineBookingEnabled Boolean               @default(true)
+  requiredResources    Json?
+  internalNotes        String?
+  active               Boolean               @default(true)
+  appointmentItems     AppointmentItem[]
+  business             Business              @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  category             ServiceCategory       @relation(fields: [categoryId], references: [id])
+  commandItems         CommandItem[]
+  packageItems         PackageItem[]
+  professionals        ProfessionalService[]
+
+  @@index([businessId])
+  @@map("services")
+}
+
+model ProfessionalService {
+  professionalId String
+  serviceId      String
+  commissionRate Float?
+  professional   Professional @relation(fields: [professionalId], references: [id], onDelete: Cascade)
+  service        Service      @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@id([professionalId, serviceId])
+  @@map("professional_services")
+}
+
+model Appointment {
+  id                     String            @id @default(cuid())
+  businessId             String
+  branchId               String?
+  clientId               String
+  professionalId         String
+  status                 AppointmentStatus @default(SCHEDULED)
+  source                 AppointmentSource @default(MANUAL)
+  startsAt               DateTime
+  endsAt                 DateTime
+  notes                  String?
+  depositRequired        Boolean           @default(false)
+  depositPaid            Boolean           @default(false)
+  cancellationDeadlineAt DateTime?
+  cancelledAt            DateTime?
+  createdAt              DateTime          @default(now())
+  updatedAt              DateTime          @updatedAt
+  branch                 Branch?           @relation(fields: [branchId], references: [id])
+  business               Business          @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  client                 Client            @relation(fields: [clientId], references: [id])
+  professional           Professional      @relation(fields: [professionalId], references: [id])
+  command                Command?
+  items                  AppointmentItem[]
+  reviews                Review[]
+
+  @@index([businessId, startsAt])
+  @@index([professionalId, startsAt, endsAt])
+  @@map("appointments")
+}
+
+model AppointmentItem {
+  id              String      @id @default(cuid())
+  appointmentId   String
+  serviceId       String
+  priceCents      Int
+  durationMinutes Int
+  appointment     Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+  service         Service     @relation(fields: [serviceId], references: [id])
+
+  @@map("appointment_items")
+}
+
+model Command {
+  id            String        @id @default(cuid())
+  businessId    String
+  appointmentId String?       @unique
+  clientId      String?
+  status        CommandStatus @default(OPEN)
+  openedAt      DateTime      @default(now())
+  closedAt      DateTime?
+  subtotalCents Int           @default(0)
+  discountCents Int           @default(0)
+  tipCents      Int           @default(0)
+  totalCents    Int           @default(0)
+  notes         String?
+  appointment   Appointment?  @relation(fields: [appointmentId], references: [id])
+  business      Business      @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  client        Client?       @relation(fields: [clientId], references: [id])
+  items         CommandItem[]
+  payments      Payment[]
+
+  @@index([businessId, status])
+  @@map("commands")
+}
+
+model CommandItem {
+  id              String          @id @default(cuid())
+  businessId      String
+  commandId       String
+  professionalId  String?
+  serviceId       String?
+  productId       String?
+  type            CommandItemType
+  description     String
+  quantity        Int             @default(1)
+  unitPriceCents  Int
+  discountCents   Int             @default(0)
+  totalCents      Int
+  commissionCents Int             @default(0)
+  command         Command         @relation(fields: [commandId], references: [id], onDelete: Cascade)
+  professional    Professional?   @relation(fields: [professionalId], references: [id])
+  product         Product?        @relation(fields: [productId], references: [id])
+  service         Service?        @relation(fields: [serviceId], references: [id])
+  commission      Commission?
+
+  @@index([businessId])
+  @@map("command_items")
+}
+
+model Payment {
+  id          String        @id @default(cuid())
+  businessId  String
+  commandId   String
+  clientId    String?
+  amountCents Int
+  method      PaymentMethod
+  status      PaymentStatus @default(PENDING)
+  externalId  String?
+  paidAt      DateTime?
+  createdAt   DateTime      @default(now())
+  business    Business      @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  client      Client?       @relation(fields: [clientId], references: [id])
+  command     Command       @relation(fields: [commandId], references: [id], onDelete: Cascade)
+
+  @@index([businessId, paidAt])
+  @@map("payments")
+}
+
+model Commission {
+  id                  String             @id @default(cuid())
+  businessId          String
+  professionalId      String
+  commandItemId       String?            @unique
+  commissionPaymentId String?
+  baseAmountCents     Int
+  rate                Float
+  amountCents         Int
+  status              CommissionStatus   @default(PENDING)
+  availableAt         DateTime?
+  paidAt              DateTime?
+  createdAt           DateTime           @default(now())
+  business            Business           @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  commandItem         CommandItem?       @relation(fields: [commandItemId], references: [id])
+  commissionPayment   CommissionPayment? @relation(fields: [commissionPaymentId], references: [id])
+  professional        Professional       @relation(fields: [professionalId], references: [id])
+
+  @@index([businessId, status])
+  @@map("commissions")
+}
+
+model CommissionPayment {
+  id             String       @id @default(cuid())
+  businessId     String
+  professionalId String?
+  periodStart    DateTime
+  periodEnd      DateTime
+  totalCents     Int
+  paidAt         DateTime?
+  createdAt      DateTime     @default(now())
+  business       Business     @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  commissions    Commission[]
+
+  @@index([businessId, periodStart, periodEnd])
+  @@map("commission_payments")
+}
+
+model ProductCategory {
+  id          String    @id @default(cuid())
+  businessId  String
+  name        String
+  description String?
+  active      Boolean   @default(true)
+  business    Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  products    Product[]
+
+  @@unique([businessId, name])
+  @@map("product_categories")
+}
+
+model Supplier {
+  id          String    @id @default(cuid())
+  businessId  String
+  name        String
+  contactName String?
+  phone       String?
+  email       String?
+  notes       String?
+  business    Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  products    Product[]
+
+  @@unique([businessId, name])
+  @@map("suppliers")
+}
+
+model Product {
+  id             String          @id @default(cuid())
+  businessId     String
+  categoryId     String
+  supplierId     String?
+  name           String
+  description    String?
+  imageUrl       String?
+  barcode        String?
+  costCents      Int
+  salePriceCents Int
+  stockQuantity  Int             @default(0)
+  minimumStock   Int             @default(0)
+  expirationDate DateTime?
+  batchNumber    String?
+  internalUse    Boolean         @default(false)
+  retail         Boolean         @default(true)
+  active         Boolean         @default(true)
+  business       Business        @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  category       ProductCategory @relation(fields: [categoryId], references: [id])
+  commandItems   CommandItem[]
+  stockMovements StockMovement[]
+  supplier       Supplier?       @relation(fields: [supplierId], references: [id])
+
+  @@index([businessId])
+  @@map("products")
+}
+
+model StockMovement {
+  id            String            @id @default(cuid())
+  businessId    String
+  productId     String
+  type          StockMovementType
+  quantity      Int
+  unitCostCents Int?
+  reason        String?
+  referenceId   String?
+  occurredAt    DateTime          @default(now())
+  business      Business          @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  product       Product           @relation(fields: [productId], references: [id])
+
+  @@index([businessId, occurredAt])
+  @@map("stock_movements")
+}
+
+model ExpenseCategory {
+  id         String    @id @default(cuid())
+  businessId String
+  name       String
+  business   Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  expenses   Expense[]
+
+  @@unique([businessId, name])
+  @@map("expense_categories")
+}
+
+model Expense {
+  id          String          @id @default(cuid())
+  businessId  String
+  categoryId  String
+  description String
+  amountCents Int
+  dueDate     DateTime
+  paidAt      DateTime?
+  business    Business        @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  category    ExpenseCategory @relation(fields: [categoryId], references: [id])
+
+  @@index([businessId, dueDate])
+  @@map("expenses")
+}
+
+model CashRegister {
+  id                  String    @id @default(cuid())
+  businessId          String
+  branchId            String?
+  openedById          String
+  closedById          String?
+  openedAt            DateTime  @default(now())
+  closedAt            DateTime?
+  openingAmountCents  Int
+  closingAmountCents  Int?
+  expectedAmountCents Int?
+  differenceCents     Int?
+  notes               String?
+  branch              Branch?   @relation(fields: [branchId], references: [id])
+  business            Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  closedBy            User?     @relation("CashRegisterClosedBy", fields: [closedById], references: [id])
+  openedBy            User      @relation("CashRegisterOpenedBy", fields: [openedById], references: [id])
+
+  @@index([businessId, openedAt])
+  @@map("cash_registers")
+}
+
+model Package {
+  id             String          @id @default(cuid())
+  businessId     String
+  name           String
+  description    String?
+  priceCents     Int
+  expiresInDays  Int?
+  active         Boolean         @default(true)
+  business       Business        @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  clientPackages ClientPackage[]
+  items          PackageItem[]
+
+  @@index([businessId])
+  @@map("packages")
+}
+
+model PackageItem {
+  id        String  @id @default(cuid())
+  packageId String
+  serviceId String
+  sessions  Int
+  package   Package @relation(fields: [packageId], references: [id], onDelete: Cascade)
+  service   Service @relation(fields: [serviceId], references: [id])
+
+  @@unique([packageId, serviceId])
+  @@map("package_items")
+}
+
+model ClientPackage {
+  id                String        @id @default(cuid())
+  clientId          String
+  packageId         String
+  status            PackageStatus @default(ACTIVE)
+  purchasedAt       DateTime      @default(now())
+  expiresAt         DateTime?
+  remainingSessions Int
+  client            Client        @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  package           Package       @relation(fields: [packageId], references: [id])
+
+  @@index([clientId, status])
+  @@map("client_packages")
+}
+
+model Subscription {
+  id            String        @id @default(cuid())
+  businessId    String
+  clientId      String?
+  name          String
+  amountCents   Int
+  interval      String
+  status        PackageStatus @default(ACTIVE)
+  nextBillingAt DateTime?
+  createdAt     DateTime      @default(now())
+  business      Business      @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@index([businessId, status])
+  @@map("subscriptions")
+}
+
+model MarketingCampaign {
+  id          String         @id @default(cuid())
+  businessId  String
+  name        String
+  channel     MessageChannel
+  audience    Json?
+  status      MessageStatus  @default(DRAFT)
+  scheduledAt DateTime?
+  createdAt   DateTime       @default(now())
+  business    Business       @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  messages    SentMessage[]
+
+  @@index([businessId, status])
+  @@map("marketing_campaigns")
+}
+
+model MessageTemplate {
+  id           String         @id @default(cuid())
+  businessId   String
+  name         String
+  channel      MessageChannel
+  trigger      String
+  subject      String?
+  body         String
+  active       Boolean        @default(true)
+  business     Business       @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  sentMessages SentMessage[]
+
+  @@unique([businessId, name])
+  @@map("message_templates")
+}
+
+model SentMessage {
+  id         String             @id @default(cuid())
+  businessId String
+  campaignId String?
+  templateId String?
+  clientId   String?
+  sentById   String?
+  channel    MessageChannel
+  to         String
+  body       String
+  status     MessageStatus      @default(SCHEDULED)
+  sentAt     DateTime?
+  error      String?
+  business   Business           @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  campaign   MarketingCampaign? @relation(fields: [campaignId], references: [id])
+  client     Client?            @relation(fields: [clientId], references: [id])
+  sentBy     User?              @relation(fields: [sentById], references: [id])
+  template   MessageTemplate?   @relation(fields: [templateId], references: [id])
+
+  @@index([businessId, status])
+  @@map("sent_messages")
+}
+
+model Review {
+  id                 String       @id @default(cuid())
+  businessId         String
+  appointmentId      String?
+  clientId           String
+  professionalId     String?
+  serviceRating      Int
+  professionalRating Int?
+  nps                Int?
+  comment            String?
+  googleReviewUrl    String?
+  createdAt          DateTime     @default(now())
+  appointment        Appointment? @relation(fields: [appointmentId], references: [id])
+  business           Business     @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  client             Client       @relation(fields: [clientId], references: [id])
+
+  @@index([businessId, createdAt])
+  @@map("reviews")
+}
+
+model AuditLog {
+  id         String    @id @default(cuid())
+  businessId String?
+  actorId    String?
+  action     String
+  subject    String
+  subjectId  String?
+  metadata   Json?
+  ipAddress  String?
+  createdAt  DateTime  @default(now())
+  actor      User?     @relation(fields: [actorId], references: [id])
+  business   Business? @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@index([businessId, createdAt])
+  @@map("audit_logs")
+}
+
+model Setting {
+  id         String   @id @default(cuid())
+  businessId String
+  key        String
+  value      Json
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@unique([businessId, key])
+  @@map("settings")
+}
+
+model Translation {
+  id         String    @id @default(cuid())
+  businessId String?
+  locale     Locale
+  namespace  String
+  key        String
+  value      String
+  business   Business? @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@unique([businessId, locale, namespace, key])
+  @@map("translations")
+}

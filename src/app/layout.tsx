@@ -1,0 +1,21 @@
+import type { Metadata } from "next";
+import "./globals.css";
+
+export const metadata: Metadata = {
+  title: "Késia Dutra Cabeleireira",
+  description: "Sistema de gestão para agenda, clientes, comandas, financeiro e estoque.",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="pt-BR" className="h-full antialiased">
+      <body className="min-h-full" suppressHydrationWarning>
+        {children}
+      </body>
+    </html>
+  );
+}
