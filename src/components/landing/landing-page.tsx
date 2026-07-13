@@ -738,10 +738,11 @@ function Footer() {
 function WhatsAppFloatingButton() {
   return (
     <a
+      data-floating-whatsapp
       href={whatsappHref()}
       target="_blank"
       rel="noreferrer"
-      className="fixed bottom-5 right-5 z-40 inline-flex size-13 items-center justify-center rounded-full bg-[#1FA855] text-white shadow-lg shadow-black/20 transition hover:-translate-y-0.5 hover:bg-[#168744] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1FA855]"
+      className="pointer-events-none fixed bottom-5 right-5 z-40 inline-flex size-13 items-center justify-center rounded-full bg-[#1FA855] text-white opacity-0 shadow-lg shadow-black/20 transition hover:-translate-y-0.5 hover:bg-[#168744] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1FA855]"
       aria-label="Falar pelo WhatsApp"
     >
       <MessageCircle className="size-6" aria-hidden="true" />
