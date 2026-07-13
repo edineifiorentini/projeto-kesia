@@ -11,12 +11,13 @@ import {
   Star,
 } from "lucide-react";
 import { clsx } from "clsx";
+import { ExperienceSection } from "@/components/landing/experience-section";
 import { ScrollHeroExperience } from "@/components/landing/scroll-hero-experience";
 import { landingPageData } from "@/lib/landing-page-data";
 
 const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: ["700", "800", "900"],
+  weight: ["400", "700", "800", "900"],
   display: "swap",
 });
 
@@ -286,57 +287,6 @@ function SectionHeader({
         </p>
       ) : null}
     </div>
-  );
-}
-
-function PurposeSection() {
-  return (
-    <section className="bg-[#FFFDF9] px-5 py-20 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-[760px] text-center">
-        <SectionTag>{"// Essência"}</SectionTag>
-        <h2
-          className={clsx(
-            fraunces.className,
-            "mt-6 text-[34px] font-black leading-[1.05] tracking-normal text-[#5F4B43] sm:text-5xl",
-          )}
-        >
-          Mais do que cabelo, uma experiência de beleza, cuidado e confiança.
-        </h2>
-        <p className="mt-6 text-lg font-semibold leading-8 text-[#7A655C]">
-          Cada atendimento é pensado para respeitar seu estilo, valorizar sua
-          identidade e transformar o seu momento em uma experiência leve,
-          acolhedora e especial.
-        </p>
-      </div>
-    </section>
-  );
-}
-
-function ExperienceSection() {
-  return (
-    <section className="bg-[#FFFDF9] px-5 pb-24 sm:px-6 lg:px-8">
-      <div className="mx-auto grid max-w-[980px] gap-8">
-        <div className="grid gap-4 md:grid-cols-[0.95fr_1.05fr] md:items-end">
-          <h2 className={clsx(fraunces.className, "text-3xl font-black leading-[1.08] text-[#5F4B43] sm:text-4xl")}>
-            Um espaço preparado para você se sentir bem desde a chegada.
-          </h2>
-          <p className="text-base font-semibold leading-7 text-[#7A655C]">
-            Do primeiro contato ao último detalhe da finalização, tudo é pensado
-            para que você se sinta segura, bonita e acolhida.
-          </p>
-        </div>
-        <div className="relative overflow-hidden rounded-tl-[96px] rounded-md">
-          <Image
-            src={images.salon}
-            alt="Ambiente claro e elegante de salão de beleza"
-            width={1400}
-            height={620}
-            sizes="(min-width: 1024px) 980px, 100vw"
-            className="h-[280px] w-full object-cover sm:h-[420px]"
-          />
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -758,8 +708,10 @@ export function LandingPage() {
         frauncesClassName={fraunces.className}
         nunitoClassName={nunitoSans.className}
       />
-      <PurposeSection />
-      <ExperienceSection />
+      <ExperienceSection
+        frauncesClassName={fraunces.className}
+        nunitoClassName={nunitoSans.className}
+      />
       <AboutSection />
       <ServicesSection />
       <AudienceSection />
