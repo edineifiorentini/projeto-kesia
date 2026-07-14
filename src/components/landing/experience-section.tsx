@@ -115,7 +115,7 @@ export function ExperienceSection({
           gsap.set(eyebrowLine, { scaleX: 0, transformOrigin: "left center" });
           gsap.set(headlineLines, { yPercent: 110 });
           gsap.set(supporting, { autoAlpha: 0, y: 20 });
-          gsap.set(imageFrames, { clipPath: "inset(100% 0 0 0)" });
+          gsap.set(imageFrames, { autoAlpha: 0, y: 18 });
           gsap.set(imageMedia, { scale: 1.06 });
           gsap.set(featureDividers, {
             scaleX: 0,
@@ -124,15 +124,13 @@ export function ExperienceSection({
           gsap.set(featureNumbers, { autoAlpha: 0, y: 10 });
           gsap.set(featureContent, { autoAlpha: 0, y: 14 });
 
-          const isWideLayout = window.innerWidth >= 1280;
+          const isWideLayout = window.innerWidth >= 1024;
           const timeline = gsap.timeline({
-            defaults: { ease: "none" },
+            defaults: { ease: "power2.out" },
             scrollTrigger: {
               trigger: section,
-              start: "top 82%",
-              end: "bottom 30%",
-              scrub: 0.7,
-              invalidateOnRefresh: true,
+              start: "top 78%",
+              once: true,
             },
           });
 
@@ -168,9 +166,10 @@ export function ExperienceSection({
             )
             .fromTo(
               imageFrames,
-              { clipPath: "inset(100% 0 0 0)" },
+              { autoAlpha: 0, y: 18 },
               {
-                clipPath: "inset(0% 0 0 0)",
+                autoAlpha: 1,
+                y: 0,
                 duration: 0.34,
                 stagger: 0.055,
                 ease: "power3.out",
@@ -270,7 +269,7 @@ export function ExperienceSection({
       aria-labelledby="experiencia-titulo"
       className={clsx(
         nunitoClassName,
-        "relative overflow-clip bg-[#FBFAF8] px-6 py-24 text-[#1E1B19] sm:px-8 lg:px-[clamp(32px,5vw,88px)] lg:py-[clamp(120px,11vw,190px)]",
+        "relative overflow-clip bg-[#FBFAF8] px-6 py-24 text-[#1E1B19] sm:px-8 lg:px-[clamp(32px,5vw,88px)] lg:py-[clamp(96px,8vw,150px)]",
       )}
     >
       <span
@@ -283,21 +282,21 @@ export function ExperienceSection({
         ESSÊNCIA
       </span>
 
-      <div className="relative mx-auto flex max-w-[1680px] flex-col xl:grid xl:grid-cols-[minmax(340px,0.82fr)_minmax(580px,1.18fr)] xl:items-start xl:gap-x-[clamp(64px,7vw,140px)]">
+      <div className="relative mx-auto flex max-w-[1680px] flex-col lg:grid lg:grid-cols-[minmax(300px,0.82fr)_minmax(440px,1.18fr)] lg:items-start lg:gap-x-[clamp(36px,5vw,80px)] xl:grid-cols-[minmax(340px,0.82fr)_minmax(580px,1.18fr)] xl:gap-x-[clamp(64px,7vw,140px)]">
         <ExperienceIntro
           frauncesClassName={frauncesClassName}
-          className="order-1 xl:col-start-1 xl:row-start-1"
+          className="order-1 lg:col-start-1 lg:row-start-1"
         />
 
         <HairstyleEditorialGallery
           images={experienceImages}
-          className="order-2 xl:col-start-2 xl:row-span-2 xl:row-start-1"
+          className="order-2 lg:col-start-2 lg:row-span-2 lg:row-start-1"
         />
 
         <ExperienceFeatureList
           features={experienceFeatures}
           frauncesClassName={frauncesClassName}
-          className="order-3 mt-14 md:order-2 xl:order-none xl:col-start-1 xl:row-start-2 xl:mt-20"
+          className="order-3 mt-14 md:order-2 lg:order-none lg:col-start-1 lg:row-start-2 lg:mt-12"
         />
       </div>
     </section>
@@ -331,7 +330,7 @@ function ExperienceIntro({
         id="experiencia-titulo"
         className={clsx(
           frauncesClassName,
-          "mt-7 text-[clamp(2.45rem,10vw,3.2rem)] font-normal leading-[0.94] tracking-normal text-[#1E1B19] md:text-[clamp(3.3rem,6vw,5rem)] xl:text-[clamp(2rem,2.65vw,3.2rem)]",
+          "mt-7 text-[clamp(2.45rem,10vw,3.2rem)] font-normal leading-[0.94] tracking-normal text-[#1E1B19] md:text-[clamp(3.3rem,6vw,5rem)] lg:text-[clamp(2rem,3.4vw,3.2rem)] xl:text-[clamp(2rem,2.65vw,3.2rem)]",
         )}
       >
         {[
@@ -343,7 +342,7 @@ function ExperienceIntro({
             <span
               data-experience-headline-line
               data-experience-mobile-reveal
-              className="block xl:whitespace-nowrap"
+              className="block lg:whitespace-nowrap"
             >
               {line}
             </span>
@@ -395,7 +394,7 @@ function ExperienceFeatureItem({
   return (
     <li
       data-experience-mobile-reveal
-      className="group relative grid grid-cols-[46px_1px_minmax(0,1fr)] gap-x-4 py-7 sm:grid-cols-[58px_1px_minmax(0,1fr)] sm:gap-x-6 sm:py-8"
+      className="group relative grid grid-cols-[46px_1px_minmax(0,1fr)] gap-x-4 py-7 sm:grid-cols-[58px_1px_minmax(0,1fr)] sm:gap-x-6 sm:py-6"
     >
       <span
         data-experience-divider
@@ -445,7 +444,7 @@ function HairstyleEditorialGallery({
   return (
     <div
       className={clsx(
-        "contents xl:grid xl:grid-cols-[minmax(0,1.55fr)_minmax(220px,1fr)] xl:gap-4",
+        "contents lg:grid lg:grid-cols-[minmax(0,1.55fr)_minmax(170px,1fr)] lg:gap-4 xl:grid-cols-[minmax(0,1.55fr)_minmax(220px,1fr)]",
         className,
       )}
     >
@@ -453,21 +452,21 @@ function HairstyleEditorialGallery({
         image={mainImage}
         motion="main"
         sizes="(min-width: 1100px) 34vw, (min-width: 768px) 70vw, calc(100vw - 48px)"
-        className="order-2 mt-12 aspect-[4/5] md:order-3 md:w-full md:max-w-[780px] xl:order-none xl:mt-0"
+        className="order-2 mt-12 aspect-[4/5] md:order-3 md:w-full md:max-w-[780px] lg:order-none lg:mt-0"
       />
 
-      <div className="order-4 mt-4 grid grid-cols-2 gap-3 sm:gap-4 md:w-full md:max-w-[780px] xl:mt-0 xl:max-w-none xl:grid-cols-1 xl:grid-rows-2">
+      <div className="order-4 mt-4 grid grid-cols-2 gap-3 sm:gap-4 md:w-full md:max-w-[780px] lg:mt-0 lg:max-w-none lg:grid-cols-1 lg:grid-rows-2">
         <EditorialImage
           image={upperImage}
           motion="upper"
           sizes="(min-width: 1100px) 22vw, calc(50vw - 30px)"
-          className="aspect-[4/3] xl:aspect-auto xl:h-full"
+          className="aspect-[4/3] lg:aspect-auto lg:h-full"
         />
         <EditorialImage
           image={lowerImage}
           motion="lower"
           sizes="(min-width: 1100px) 22vw, calc(50vw - 30px)"
-          className="aspect-[4/3] xl:aspect-auto xl:h-full"
+          className="aspect-[4/3] lg:aspect-auto lg:h-full"
         />
       </div>
     </div>

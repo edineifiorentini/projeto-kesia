@@ -338,7 +338,7 @@ export function AboutKesiaSection({
       <div className="about-kesia-sticky relative px-6 py-24 sm:px-8 md:py-28 xl:sticky xl:top-0 xl:h-svh xl:px-[clamp(32px,5vw,88px)] xl:py-[clamp(48px,6vh,84px)] motion-reduce:xl:static motion-reduce:xl:h-auto">
         <BackgroundEditorialWord frauncesClassName={frauncesClassName} />
 
-        <div className="relative z-10 mx-auto flex max-w-[1720px] flex-col gap-y-12 md:grid md:grid-cols-2 md:grid-rows-[auto_auto_auto_auto_auto] md:gap-x-10 md:gap-y-12 xl:h-full xl:grid-cols-[minmax(300px,0.82fr)_minmax(420px,1.05fr)_minmax(300px,0.82fr)] xl:grid-rows-[minmax(320px,0.9fr)_88px_88px_minmax(132px,0.7fr)] xl:items-center xl:gap-x-[clamp(30px,4vw,76px)] xl:gap-y-2">
+        <div className="relative z-10 mx-auto flex max-w-[1720px] flex-col gap-y-12 md:grid md:grid-cols-2 md:grid-rows-[auto_auto_auto_auto_auto] md:gap-x-10 md:gap-y-12 xl:h-full xl:grid-cols-[minmax(300px,0.82fr)_minmax(420px,1.05fr)_minmax(300px,0.82fr)] xl:grid-rows-[minmax(clamp(320px,43svh,390px),0.9fr)_88px_88px_minmax(120px,0.7fr)] xl:items-center xl:gap-x-[clamp(30px,4vw,76px)] xl:gap-y-2">
           <AboutKesiaIntro
             frauncesClassName={frauncesClassName}
             className="order-1 md:col-span-2 md:row-start-1 xl:col-span-1 xl:col-start-1 xl:row-start-1 xl:self-start"
@@ -574,14 +574,14 @@ function ProfessionalIdentity({
       data-about-identity
       data-about-mobile-reveal
       className={clsx(
-        "max-w-[300px] pt-2 md:mx-auto md:text-center xl:mx-0 xl:text-left",
+        "max-w-[340px] pt-2 md:mx-auto md:text-center xl:mx-0 xl:max-w-[390px] xl:text-left",
         className,
       )}
     >
       <p
         className={clsx(
           frauncesClassName,
-          "text-[clamp(2.3rem,3vw,3.8rem)] font-normal leading-none tracking-normal text-[#A58162]",
+          "whitespace-nowrap text-[clamp(2.3rem,3vw,3.8rem)] font-normal leading-none tracking-normal text-[#A58162]",
         )}
       >
         Késia Dutra

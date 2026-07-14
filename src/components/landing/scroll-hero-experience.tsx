@@ -333,7 +333,7 @@ export function ScrollHeroExperience({
       ref={sectionRef}
       className={clsx(
         nunitoClassName,
-        "relative h-[100svh] min-h-[700px] overflow-hidden bg-[#FEFFFF] text-[#191817] max-lg:min-h-0",
+        "relative h-[96svh] min-h-[680px] overflow-hidden bg-[#FEFFFF] text-[#191817] max-lg:min-h-0",
       )}
     >
       <HeroHeader

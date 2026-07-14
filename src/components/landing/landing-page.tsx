@@ -452,11 +452,11 @@ function TestimonialsSection() {
             Quero viver essa experiência
           </PrimaryButton>
         </div>
-        <div className="mt-10 flex gap-5 overflow-x-auto pb-3">
+        <div className="mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {testimonials.map((testimonial) => (
             <article
               key={testimonial.service}
-              className="min-w-[280px] max-w-sm rounded-lg bg-[#FFFDF9] p-6 ring-1 ring-[#E4D2C3] sm:min-w-[360px]"
+              className="min-w-[280px] max-w-sm snap-start rounded-lg bg-[#FFFDF9] p-6 ring-1 ring-[#E4D2C3] sm:min-w-[360px]"
             >
               <div className="flex gap-1 text-[#B94A2F]" aria-hidden="true">
                 {[1, 2, 3, 4, 5].map((item) => (
