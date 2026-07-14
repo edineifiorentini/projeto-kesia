@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { Fraunces, Nunito_Sans } from "next/font/google";
 import {
-  ArrowRight,
   CalendarCheck2,
   CheckCircle2,
   MessageCircle,
@@ -14,6 +13,7 @@ import { clsx } from "clsx";
 import { AboutKesiaSection } from "@/components/landing/about-kesia-section";
 import { ExperienceSection } from "@/components/landing/experience-section";
 import { ScrollHeroExperience } from "@/components/landing/scroll-hero-experience";
+import { ServicesSection } from "@/components/landing/services-section";
 import { landingPageData } from "@/lib/landing-page-data";
 
 const fraunces = Fraunces({
@@ -46,57 +46,6 @@ const images = {
   final:
     "https://images.unsplash.com/photo-1522336284037-91f7da073525?auto=format&fit=crop&w=1000&q=86",
 } as const;
-
-const services = [
-  {
-    title: "Penteado para noivas",
-    description:
-      "Produções elegantes, seguras e pensadas para harmonizar com vestido, maquiagem e cerimônia.",
-    image: images.bride,
-    alt: "Penteado elegante para noiva",
-    message: "Olá! Gostaria de informações sobre penteado para noiva.",
-  },
-  {
-    title: "Penteado para debutantes",
-    description:
-      "Um visual especial, jovem e marcante para celebrar os 15 anos com personalidade.",
-    image: images.debutante,
-    alt: "Penteado delicado para debutante",
-    message: "Olá! Gostaria de informações sobre penteado para debutante.",
-  },
-  {
-    title: "Penteado para festas",
-    description:
-      "Finalizações sofisticadas para casamentos, formaturas, aniversários e eventos especiais.",
-    image: images.party,
-    alt: "Cabelo preparado para festa",
-    message: "Olá! Gostaria de agendar um penteado para festa.",
-  },
-  {
-    title: "Coloração e tintura",
-    description:
-      "Cores pensadas com técnica para valorizar seu cabelo, seu tom e seu estilo.",
-    image: images.final,
-    alt: "Cabelo com coloração e brilho",
-    message: "Olá! Gostaria de informações sobre coloração ou tintura.",
-  },
-  {
-    title: "Lavagem e escova",
-    description:
-      "Cuidado, brilho e acabamento para deixar os fios leves, bonitos e alinhados.",
-    image: images.brush,
-    alt: "Lavagem e escova em salão de beleza",
-    message: "Olá! Gostaria de agendar lavagem e escova.",
-  },
-  {
-    title: "Finalização personalizada",
-    description:
-      "Ondas, modelagem, polimento e acabamento para valorizar o movimento dos fios.",
-    image: images.hero,
-    alt: "Finalização personalizada de cabelo",
-    message: "Olá! Gostaria de agendar uma finalização personalizada.",
-  },
-] as const;
 
 const audienceCards = [
   {
@@ -286,64 +235,6 @@ function SectionHeader({
         </p>
       ) : null}
     </div>
-  );
-}
-
-function ServicesSection() {
-  return (
-    <section id="servicos" className="bg-[#FFFDF9] px-5 py-20 sm:px-6 lg:px-8 lg:py-28">
-      <div className="mx-auto max-w-[980px]">
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <SectionHeader
-            tag="// Serviços"
-            title="Serviços feitos para realçar sua beleza em cada ocasião."
-            subtitle="Confira os principais atendimentos disponíveis."
-          />
-          <PrimaryButton href={d.bookingPath} className="w-full shrink-0 md:w-auto">
-            Agendar online
-          </PrimaryButton>
-        </div>
-
-        <div className="mt-10 grid gap-5 md:grid-cols-2">
-          {services.map((service) => (
-            <article
-              key={service.title}
-              className="group grid gap-4 rounded-lg bg-[#FFF9F3] p-4 ring-1 ring-[#E4D2C3] transition duration-300 hover:-translate-y-1 hover:shadow-[0_12px_36px_rgba(95,75,67,0.10)] sm:grid-cols-[152px_1fr]"
-            >
-              <div className="relative overflow-hidden rounded-lg">
-                <Image
-                  src={service.image}
-                  alt={service.alt}
-                  width={360}
-                  height={320}
-                  sizes="(min-width: 768px) 152px, 100vw"
-                  className="h-52 w-full object-cover transition duration-500 group-hover:scale-105 sm:h-full"
-                />
-              </div>
-              <div className="flex flex-col justify-between py-1">
-                <div>
-                  <h3 className={clsx(fraunces.className, "text-2xl font-black leading-tight text-[#5F4B43]")}>
-                    {service.title}
-                  </h3>
-                  <p className="mt-3 text-sm font-semibold leading-6 text-[#7A655C]">
-                    {service.description}
-                  </p>
-                </div>
-                <a
-                  href={whatsappHref(service.message)}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-5 inline-flex items-center gap-2 text-sm font-extrabold text-[#B94A2F] underline-offset-4 hover:underline"
-                >
-                  Falar sobre este serviço
-                  <ArrowRight className="size-4" aria-hidden="true" />
-                </a>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -665,7 +556,11 @@ export function LandingPage() {
         frauncesClassName={fraunces.className}
         nunitoClassName={nunitoSans.className}
       />
-      <ServicesSection />
+      <ServicesSection
+        frauncesClassName={fraunces.className}
+        nunitoClassName={nunitoSans.className}
+        whatsappPhone={d.whatsappPhone}
+      />
       <AudienceSection />
       <GallerySection />
       <TestimonialsSection />

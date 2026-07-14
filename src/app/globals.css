@@ -143,3 +143,47 @@ button,
 [role="button"] {
   cursor: pointer;
 }
+
+@media (min-width: 1100px) and (min-height: 720px) and (prefers-reduced-motion: no-preference) {
+  .services-scroll {
+    height: 230svh;
+  }
+
+  .services-sticky {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    padding-top: clamp(32px, 4.8vh, 52px);
+    padding-bottom: clamp(32px, 4.8vh, 52px);
+  }
+
+  .services-layout {
+    height: 100%;
+  }
+
+  .services-media {
+    min-height: 0;
+  }
+
+  .services-sticky [data-services-headline] {
+    margin-top: 14px;
+    font-size: clamp(2.6rem, 3vw, 3.1rem);
+    line-height: 0.93;
+  }
+
+  .services-sticky [data-services-supporting] {
+    margin-top: 12px;
+    max-width: 460px;
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
+  .services-sticky [data-services-cta] {
+    min-height: 44px;
+    margin-top: 14px;
+  }
+
+  .services-sticky [data-services-selector] {
+    margin-top: 16px;
+  }
+}

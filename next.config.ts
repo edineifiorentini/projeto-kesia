@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
     : {}),
   images: {
     unoptimized: isGithubPages,
+    qualities: [75, 92],
     remotePatterns: [
       {
         protocol: "https",
