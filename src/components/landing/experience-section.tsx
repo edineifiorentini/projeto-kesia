@@ -107,6 +107,11 @@ export function ExperienceSection({
           const mainParallax = select<HTMLElement>("[data-experience-parallax='main']");
           const upperParallax = select<HTMLElement>("[data-experience-parallax='upper']");
           const lowerParallax = select<HTMLElement>("[data-experience-parallax='lower']");
+          const backgroundWord = select<HTMLElement>(
+            "[data-experience-background-word]",
+          );
+          const introBlock = select<HTMLElement>("[data-experience-intro]");
+          const featureList = select<HTMLElement>("[data-experience-list]");
           const featureDividers = select<HTMLElement>("[data-experience-divider]");
           const featureNumbers = select<HTMLElement>("[data-experience-number]");
           const featureContent = select<HTMLElement>("[data-experience-feature-content]");
@@ -221,12 +226,46 @@ export function ExperienceSection({
                 ease: "power3.out",
               },
               0.46,
-            )
-            .to(mainParallax, { y: isWideLayout ? -34 : -20, duration: 0.45 }, 0.55)
-            .to(upperParallax, { y: isWideLayout ? 18 : 11, duration: 0.45 }, 0.55)
-            .to(lowerParallax, { y: isWideLayout ? -22 : -13, duration: 0.45 }, 0.55);
+            );
 
-          return () => timeline.kill();
+          const scrollMotion = gsap.timeline({
+            defaults: { ease: "none" },
+            scrollTrigger: {
+              trigger: section,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: 0.85,
+              invalidateOnRefresh: true,
+            },
+          });
+
+          scrollMotion
+            .fromTo(
+              mainParallax,
+              { y: isWideLayout ? 26 : 16 },
+              { y: isWideLayout ? -34 : -20, duration: 1 },
+              0,
+            )
+            .fromTo(
+              upperParallax,
+              { y: isWideLayout ? -14 : -8 },
+              { y: isWideLayout ? 18 : 11, duration: 1 },
+              0,
+            )
+            .fromTo(
+              lowerParallax,
+              { y: isWideLayout ? 18 : 10 },
+              { y: isWideLayout ? -22 : -13, duration: 1 },
+              0,
+            )
+            .fromTo(backgroundWord, { x: 38 }, { x: -38, duration: 1 }, 0)
+            .fromTo(introBlock, { y: 12 }, { y: -12, duration: 1 }, 0)
+            .fromTo(featureList, { y: 18 }, { y: -10, duration: 1 }, 0);
+
+          return () => {
+            timeline.kill();
+            scrollMotion.kill();
+          };
         },
       );
 
@@ -273,6 +312,7 @@ export function ExperienceSection({
       )}
     >
       <span
+        data-experience-background-word
         aria-hidden="true"
         className={clsx(
           frauncesClassName,
@@ -311,7 +351,7 @@ function ExperienceIntro({
   className?: string;
 }) {
   return (
-    <div className={clsx("max-w-[650px]", className)}>
+    <div data-experience-intro className={clsx("max-w-[650px]", className)}>
       <div
         data-experience-eyebrow
         data-experience-mobile-reveal
@@ -372,7 +412,7 @@ function ExperienceFeatureList({
   className?: string;
 }) {
   return (
-    <ol className={clsx("max-w-[650px]", className)}>
+    <ol data-experience-list className={clsx("max-w-[650px]", className)}>
       {features.map((feature) => (
         <ExperienceFeatureItem
           key={feature.number}
