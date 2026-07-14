@@ -78,11 +78,11 @@ const specialties: Specialty[] = [
 
 const specialtyPlacement: Record<Specialty["id"], string> = {
   bridal:
-    "order-3 md:col-start-1 md:row-start-3 xl:col-start-1 xl:row-start-2",
+    "order-3 md:col-start-1 md:row-start-3 xl:top-4 xl:col-start-1 xl:row-start-2",
   events:
     "order-4 md:col-start-2 md:row-start-3 xl:col-start-3 xl:row-start-2",
   color:
-    "order-5 md:col-start-1 md:row-start-4 xl:col-start-1 xl:row-start-3",
+    "order-5 md:col-start-1 md:row-start-4 xl:top-4 xl:col-start-1 xl:row-start-3",
   finishing:
     "order-6 md:col-start-2 md:row-start-4 xl:col-start-3 xl:row-start-3",
 };
