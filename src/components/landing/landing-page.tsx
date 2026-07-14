@@ -11,6 +11,7 @@ import {
   Star,
 } from "lucide-react";
 import { clsx } from "clsx";
+import { AboutKesiaSection } from "@/components/landing/about-kesia-section";
 import { ExperienceSection } from "@/components/landing/experience-section";
 import { ScrollHeroExperience } from "@/components/landing/scroll-hero-experience";
 import { landingPageData } from "@/lib/landing-page-data";
@@ -34,8 +35,6 @@ const images = {
     "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1400&q=86",
   salon:
     "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1400&q=86",
-  about:
-    "https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1100&q=86",
   bride:
     "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=86",
   debutante:
@@ -287,56 +286,6 @@ function SectionHeader({
         </p>
       ) : null}
     </div>
-  );
-}
-
-function AboutSection() {
-  return (
-    <section id="sobre" className="bg-[#9F6E58] px-5 py-20 text-white sm:px-6 lg:px-8 lg:py-28">
-      <div className="mx-auto grid max-w-[1180px] gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-14">
-        <div className="overflow-hidden rounded-tr-[92px] rounded-md bg-[#D7BDA6]">
-          <Image
-            src={images.about}
-            alt="Profissional de beleza cuidando dos cabelos de uma cliente"
-            width={900}
-            height={1050}
-            sizes="(min-width: 1024px) 46vw, 100vw"
-            className="aspect-[4/5] w-full object-cover"
-          />
-        </div>
-        <div>
-          <SectionHeader
-            tag="// Sobre"
-            title={`Olá, eu sou ${d.professionalName}.`}
-            light
-          />
-          <div className="mt-7 space-y-5 text-base font-semibold leading-8 text-white/82">
-            <p>
-              Especialista em penteados para noivas, debutantes e festas, meu
-              trabalho é criar produções que respeitam a personalidade de cada
-              cliente e valorizam sua beleza natural.
-            </p>
-            <p>
-              Também realizo serviços de coloração, lavagem, escova e
-              finalização, sempre com atenção aos detalhes, escuta cuidadosa e
-              acabamento pensado para cada ocasião.
-            </p>
-            <p>
-              Beleza não é sobre mudar quem você é. É sobre realçar sua melhor
-              versão com carinho, técnica e intenção.
-            </p>
-          </div>
-          <div className="mt-8 border-l border-white/40 pl-5">
-            <p className={clsx(fraunces.className, "text-2xl font-black")}>
-              {d.professionalName}
-            </p>
-            <p className="mt-1 text-sm font-bold uppercase tracking-normal text-white/70">
-              Especialista em penteados e beleza
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -712,7 +661,10 @@ export function LandingPage() {
         frauncesClassName={fraunces.className}
         nunitoClassName={nunitoSans.className}
       />
-      <AboutSection />
+      <AboutKesiaSection
+        frauncesClassName={fraunces.className}
+        nunitoClassName={nunitoSans.className}
+      />
       <ServicesSection />
       <AudienceSection />
       <GallerySection />
