@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="1560" viewBox="0 0 720 1560">
+  <rect width="720" height="1560" fill="#ece7e1"/>
+  <path d="M0 0h720v186H0z" fill="#fbfaf8"/>
+  <rect x="44" y="46" width="76" height="76" rx="38" fill="#d4c0ad"/>
+  <rect x="146" y="58" width="232" height="18" rx="9" fill="#8d8178" opacity=".62"/>
+  <rect x="146" y="92" width="126" height="14" rx="7" fill="#b8aca3"/>
+  <g fill="#fff" stroke="#ddd4cc" stroke-width="2">
+    <rect x="42" y="244" width="452" height="124" rx="28"/>
+    <rect x="138" y="424" width="540" height="170" rx="28"/>
+    <rect x="42" y="650" width="520" height="150" rx="28"/>
+    <rect x="244" y="856" width="434" height="124" rx="28"/>
+  </g>
+  <g fill="#cfc4ba">
+    <rect x="74" y="282" width="326" height="18" rx="9"/>
+    <rect x="74" y="318" width="242" height="18" rx="9"/>
+    <rect x="178" y="464" width="404" height="18" rx="9"/>
+    <rect x="178" y="500" width="338" height="18" rx="9"/>
+    <rect x="178" y="536" width="224" height="18" rx="9"/>
+    <rect x="74" y="688" width="396" height="18" rx="9"/>
+    <rect x="74" y="724" width="310" height="18" rx="9"/>
+    <rect x="284" y="894" width="306" height="18" rx="9"/>
+    <rect x="284" y="930" width="220" height="18" rx="9"/>
+  </g>
+  <g transform="translate(120 1116)">
+    <rect width="480" height="236" rx="34" fill="#f8f4ef" stroke="#d9c8b8" stroke-width="2"/>
+    <path d="M240 48c-28 0-50 22-50 50s22 50 50 50 50-22 50-50-22-50-50-50zm-22 49 14 14 30-34" fill="none" stroke="#aa7652" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="240" y="184" fill="#6f6259" font-family="Arial, sans-serif" font-size="22" font-weight="700" text-anchor="middle">PREVIA PROTEGIDA</text>
+  </g>
+</svg>

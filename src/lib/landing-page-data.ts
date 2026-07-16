@@ -1,10 +1,11 @@
 export const landingPageData = {
   businessName: "Késia Dutra Cabeleireira",
   professionalName: "Késia Dutra",
-  whatsappPhone: "5511999990000",
-  whatsappDisplay: "(11) 99999-0000",
-  instagram: "@kesiadutracabeleireira",
-  address: "Rua das Flores, 120, Sala 2 - Centro, São Paulo",
+  whatsappPhone: "5544997028313",
+  whatsappDisplay: "(44) 99702-8313",
+  instagram: "@kesiadutrahair",
+  instagramUrl: "https://www.instagram.com/kesiadutrahair/",
+  address: "Rua Cantú, 62, Cruzeiro do Oeste - PR",
   bookingPath: "/booking/kesia-dutra-cabeleireira",
   palette: {
     background: "#FFF8F4",
@@ -242,41 +243,6 @@ export const landingPageData = {
       },
     ],
   },
-  faq: {
-    headline: "Dúvidas frequentes",
-    questions: [
-      {
-        question: "Você faz penteado para noivas?",
-        answer:
-          "Sim. O atendimento para noivas é personalizado para combinar com o estilo da cerimônia, vestido, maquiagem e preferência da cliente.",
-      },
-      {
-        question: "Atende debutantes?",
-        answer:
-          "Sim. Os penteados para debutantes podem seguir estilos delicados, modernos, românticos ou clássicos, de acordo com a proposta da festa.",
-      },
-      {
-        question: "Preciso agendar com antecedência?",
-        answer:
-          "Sim. Para eventos especiais, o ideal é solicitar o horário com antecedência para garantir disponibilidade na agenda.",
-      },
-      {
-        question: "Também faz escova, lavagem e tintura?",
-        answer:
-          "Sim. Além dos penteados, também são oferecidos serviços de lavagem, escova e tintura.",
-      },
-      {
-        question: "O agendamento é confirmado automaticamente?",
-        answer:
-          "O agendamento registra sua solicitação. A confirmação final será feita conforme disponibilidade de horário.",
-      },
-      {
-        question: "Posso enviar referência do penteado?",
-        answer:
-          "Sim. Você pode informar no campo de mensagem ou enviar referências pelo WhatsApp após solicitar o agendamento.",
-      },
-    ],
-  },
   finalCta: {
     headline: "Seu momento merece um penteado especial",
     subheadline:
@@ -286,8 +252,7 @@ export const landingPageData = {
   },
   footer: {
     description:
-      "Penteados para noivas, debutantes, festas e serviços de beleza com atendimento personalizado.",
-    legalText: "© 2026 Késia Dutra Cabeleireira. Todos os direitos reservados.",
+      "Penteados para noivas, debutantes e ocasiões especiais.",
   },
 } as const;
 
