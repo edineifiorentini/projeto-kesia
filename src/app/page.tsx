@@ -1,28 +1,29 @@
 import type { Metadata } from "next";
 import { LandingPage } from "@/components/landing/landing-page";
+import { LocalBusinessStructuredData } from "@/components/seo/local-business-structured-data";
 import { landingPageData } from "@/lib/landing-page-data";
+import { absoluteSiteUrl, siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: landingPageData.seo.title,
   description: landingPageData.seo.description,
-  keywords: [
-    "penteado para noiva",
-    "penteado para debutante",
-    "penteado para festa",
-    "salão de beleza",
-    "escova",
-    "tintura",
-    "agendamento online",
-    "cabeleireira",
-  ],
+  alternates: { canonical: absoluteSiteUrl() },
   openGraph: {
+    url: absoluteSiteUrl(),
+    siteName: siteConfig.name,
+    locale: siteConfig.locale,
+    type: "website",
     title: landingPageData.seo.title,
-    description:
-      "Penteados, escova, tintura e finalização com atendimento acolhedor para momentos especiais.",
-    images: [landingPageData.hero.image],
+    description: landingPageData.seo.description,
+    images: [absoluteSiteUrl(siteConfig.ogImagePath)],
   },
 };
 
 export default function HomePage() {
-  return <LandingPage />;
+  return (
+    <>
+      <LocalBusinessStructuredData />
+      <LandingPage />
+    </>
+  );
 }

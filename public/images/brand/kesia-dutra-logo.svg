@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="900"
+  height="260"
+  viewBox="0 0 900 260"
+  role="img"
+  aria-labelledby="logoTitle logoDesc">
+  <title id="logoTitle">Késia Dutra Cabeleireira</title>
+  <desc id="logoDesc">Logotipo tipográfico com o nome Késia Dutra e a palavra Cabeleireira abaixo.</desc>
+
+  <g fill="currentColor">
+    <text
+      x="450"
+      y="145"
+      text-anchor="middle"
+      font-family="EB Garamond, Garamond, Georgia, serif"
+      font-size="132"
+      font-weight="400"
+      letter-spacing="-2.2">Késia Dutra</text>
+
+    <text
+      x="450"
+      y="202"
+      text-anchor="middle"
+      font-family="Arimo, Arial, sans-serif"
+      font-size="22"
+      font-weight="400"
+      letter-spacing="15">CABELEIREIRA</text>
+  </g>
+</svg>

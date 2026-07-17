@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 import { SESSION_COOKIE_NAME } from "@/lib/auth/session";
+import { rejectCrossSiteMutation } from "@/lib/security/api";
 
 export async function POST(request: Request) {
+  const crossSite = rejectCrossSiteMutation(request);
+  if (crossSite) return crossSite;
+
   const response = NextResponse.redirect(new URL("/login", request.url), {
     status: 303,
   });

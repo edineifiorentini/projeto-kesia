@@ -4,8 +4,9 @@ import { startTransition, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { MessageCircle, Plus, Sparkles } from "lucide-react";
+import { ArrowRight, MessageCircle, Plus, Sparkles } from "lucide-react";
 import { clsx } from "clsx";
+import { PremiumAction } from "@/components/ui/premium-action";
 
 type ServicesSectionProps = {
   frauncesClassName: string;
@@ -309,7 +310,7 @@ export function ServicesSection({
       aria-labelledby="servicos-titulo"
       className={clsx(
         nunitoClassName,
-        "services-scroll relative overflow-clip bg-[#FBFAF8] text-[#1D1A18]",
+        "services-scroll relative overflow-clip bg-[var(--color-background)] text-[var(--color-text-strong)]",
       )}
     >
       <div className="services-sticky px-6 py-24 sm:px-8 min-[900px]:px-[clamp(32px,5vw,88px)] min-[900px]:py-[clamp(56px,7vw,112px)]">
@@ -361,14 +362,14 @@ function ServiceIntroduction({
       <div
         data-services-eyebrow
         data-services-mobile-reveal
-        className="flex items-center gap-3 text-[0.7rem] font-extrabold uppercase leading-4 tracking-[0.24em] text-[#9A7E60]"
+        className="flex items-center gap-3 text-[0.7rem] font-extrabold uppercase leading-4 tracking-[0.24em] text-[var(--color-brand-primary)]"
       >
         <Sparkles className="size-4 shrink-0" aria-hidden="true" />
         <span>Serviços</span>
         <span
           data-services-eyebrow-line
           aria-hidden="true"
-          className="h-px w-12 bg-[#B1845F]/65"
+          className="h-px w-12 bg-[var(--color-brand-primary)]/65"
         />
       </div>
 
@@ -388,7 +389,7 @@ function ServiceIntroduction({
                 data-services-mobile-reveal
                 className={clsx(
                   "block",
-                  line === "sua história." && "text-[#A58162]",
+                  line === "sua história." && "text-[var(--color-brand-primary)]",
                 )}
               >
                 {line}
@@ -401,22 +402,24 @@ function ServiceIntroduction({
       <p
         data-services-supporting
         data-services-mobile-reveal
-        className="mt-5 max-w-[500px] text-base font-semibold leading-7 text-[#716B66] min-[900px]:text-[0.95rem]"
+        className="mt-5 max-w-[500px] text-base font-semibold leading-7 text-[var(--color-text-muted)] min-[900px]:text-[0.95rem]"
       >
         Do grande dia aos cuidados cotidianos, cada serviço respeita seu estilo e
         sua essência.
       </p>
 
-      <a
-        data-services-cta
-        href={whatsappHref(whatsappPhone, activeService.whatsappMessage)}
-        target="_blank"
-        rel="noreferrer"
-        className="mt-6 hidden min-h-12 items-center justify-center gap-2 rounded-md bg-[#B1845F] px-5 text-sm font-extrabold text-white transition duration-300 hover:bg-[#9E7251] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#9E7251] min-[900px]:inline-flex"
-      >
-        <MessageCircle className="size-4" aria-hidden="true" />
-        Conversar sobre este serviço
-      </a>
+      <PremiumAction asChild size="md" className="mt-6 hidden min-[900px]:inline-flex">
+        <a
+          data-services-cta
+          href={whatsappHref(whatsappPhone, activeService.whatsappMessage)}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <MessageCircle data-premium-leading aria-hidden="true" />
+          <span>Conversar sobre este serviço</span>
+          <ArrowRight data-premium-arrow aria-hidden="true" />
+        </a>
+      </PremiumAction>
     </div>
   );
 }
@@ -444,7 +447,7 @@ function DesktopServiceSelector({
         return (
           <li
             key={service.id}
-            className="border-t border-[rgba(91,69,52,0.15)] last:border-b"
+            className="border-t border-[var(--color-border)] last:border-b"
           >
             <button
               type="button"
@@ -459,14 +462,14 @@ function DesktopServiceSelector({
                 }
               }}
               className={clsx(
-                "group grid w-full grid-cols-[60px_1px_minmax(0,1fr)_28px] items-center gap-x-4 py-2 text-left transition-[opacity,padding] duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#B1845F] min-[1280px]:grid-cols-[72px_1px_minmax(0,1fr)_28px]",
+                "group grid w-full grid-cols-[60px_1px_minmax(0,1fr)_28px] items-center gap-x-4 py-2 text-left transition-[opacity,padding] duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-brand-primary)] min-[1280px]:grid-cols-[72px_1px_minmax(0,1fr)_28px]",
                 isActive ? "py-3 opacity-100" : "opacity-65 hover:opacity-90",
               )}
             >
               <span
                 className={clsx(
                   frauncesClassName,
-                  "text-[clamp(1.75rem,2vw,2.45rem)] font-normal leading-none tracking-normal text-[#B1845F] transition duration-300",
+                  "text-[clamp(1.75rem,2vw,2.45rem)] font-normal leading-none tracking-normal text-[var(--color-brand-primary)] transition duration-300",
                   isActive && "text-[clamp(2.2rem,2.7vw,3.35rem)]",
                 )}
                 aria-hidden="true"
@@ -475,14 +478,14 @@ function DesktopServiceSelector({
               </span>
               <span
                 aria-hidden="true"
-                className="h-full min-h-10 w-px bg-[rgba(91,69,52,0.18)]"
+                className="h-full min-h-10 w-px bg-[var(--color-border)]"
               />
               <span className="block min-w-0">
                 <span
                   className={clsx(
                     frauncesClassName,
-                    "block text-[clamp(1.2rem,1.4vw,1.6rem)] font-normal leading-[1.12] tracking-normal text-[#4B4540] transition-colors duration-300",
-                    isActive && "text-[clamp(1.4rem,1.7vw,1.9rem)] text-[#1D1A18]",
+                    "block text-[clamp(1.2rem,1.4vw,1.6rem)] font-normal leading-[1.12] tracking-normal text-[var(--color-text)] transition-colors duration-300",
+                    isActive && "text-[clamp(1.4rem,1.7vw,1.9rem)] text-[var(--color-text-strong)]",
                   )}
                 >
                   {service.title}
@@ -495,12 +498,12 @@ function DesktopServiceSelector({
                       : "grid-rows-[0fr] opacity-0",
                   )}
                 >
-                  <span className="min-h-0 overflow-hidden text-[0.82rem] font-semibold leading-5 text-[#716B66]">
+                  <span className="min-h-0 overflow-hidden text-[0.82rem] font-semibold leading-5 text-[var(--color-text-muted)]">
                     {service.description}
                   </span>
                 </span>
               </span>
-              <span className="grid size-7 place-items-center text-[#A58162]" aria-hidden="true">
+              <span className="grid size-7 place-items-center text-[var(--color-brand-primary)]" aria-hidden="true">
                 {isActive ? (
                   <Sparkles className="size-4" />
                 ) : (
@@ -529,10 +532,10 @@ function ActiveServiceMedia({
     <figure
       id="servico-imagem-ativa"
       data-services-media
-      className="services-media hidden min-h-[590px] overflow-hidden rounded-[16px] bg-[#F5F0E9] min-[900px]:col-start-2 min-[900px]:row-span-2 min-[900px]:row-start-1 min-[900px]:grid min-[900px]:grid-rows-[minmax(0,1fr)_auto]"
+      className="services-media hidden min-h-[590px] overflow-hidden rounded-[16px] bg-[var(--color-surface-warm)] min-[900px]:col-start-2 min-[900px]:row-span-2 min-[900px]:row-start-1 min-[900px]:grid min-[900px]:grid-rows-[minmax(0,1fr)_auto]"
       aria-live="polite"
     >
-      <div className="relative min-h-0 overflow-hidden bg-[#EFE7DE]">
+      <div className="relative min-h-0 overflow-hidden bg-[var(--color-surface-warm)]">
         {serviceShowcaseItems.map((service, index) => {
           const isActive = index === activeIndex;
 
@@ -555,7 +558,7 @@ function ActiveServiceMedia({
                 height={service.image.height}
                 sizes="(min-width: 1400px) 56vw, (min-width: 900px) 58vw, 100vw"
                 quality={92}
-                loading={index < 2 ? "eager" : "lazy"}
+                loading="lazy"
                 className="h-full w-full object-cover"
                 style={{ objectPosition: service.image.position }}
               />
@@ -564,12 +567,12 @@ function ActiveServiceMedia({
         })}
       </div>
 
-      <figcaption className="grid grid-cols-[auto_minmax(70px,1fr)_minmax(150px,auto)] items-center gap-5 bg-[#F7F2EC] px-6 py-5 min-[1280px]:gap-8 min-[1280px]:px-8">
-        <div className="flex items-end gap-2 text-[#A58162]">
+      <figcaption className="grid grid-cols-[auto_minmax(70px,1fr)_minmax(150px,auto)] items-center gap-5 bg-[var(--color-surface)] px-6 py-5 min-[1280px]:gap-8 min-[1280px]:px-8">
+        <div className="flex items-end gap-2 text-[var(--color-brand-primary)]">
           <span className={clsx(frauncesClassName, "text-3xl leading-none")}>
             {activeService.number}
           </span>
-          <span className="pb-0.5 text-xs font-bold text-[#716B66]">
+          <span className="pb-0.5 text-xs font-bold text-[var(--color-text-muted)]">
             / {String(serviceShowcaseItems.length).padStart(2, "0")}
           </span>
         </div>
@@ -580,19 +583,19 @@ function ActiveServiceMedia({
           aria-valuemin={1}
           aria-valuemax={serviceShowcaseItems.length}
           aria-valuenow={activeIndex + 1}
-          className="h-px overflow-hidden bg-[#DCCFC1]"
+          className="h-px overflow-hidden bg-[var(--color-brand-primary-border)]"
         >
           <span
-            className="block h-full bg-[#B1845F] transition-[width] duration-500"
+            className="block h-full bg-[var(--color-brand-primary)] transition-[width] duration-500"
             style={{ width: `${progress}%` }}
           />
         </div>
 
         <div className="text-right">
-          <p className="text-[0.68rem] font-extrabold uppercase leading-4 tracking-[0.18em] text-[#9A6E4C]">
+          <p className="text-[0.68rem] font-extrabold uppercase leading-4 tracking-[0.18em] text-[var(--color-brand-primary)]">
             {activeService.title}
           </p>
-          <p className="mt-1 text-sm font-semibold text-[#716B66]">
+          <p className="mt-1 text-sm font-semibold text-[var(--color-text-muted)]">
             {activeService.caption}
           </p>
         </div>
@@ -622,25 +625,25 @@ function MobileServiceAccordion({
           <li
             key={service.id}
             data-services-mobile-reveal
-            className="border-t border-[rgba(91,69,52,0.16)] last:border-b"
+            className="border-t border-[var(--color-border)] last:border-b"
           >
             <button
               type="button"
               aria-expanded={isActive}
               aria-controls={panelId}
               onClick={() => onSelect(index)}
-              className="grid min-h-16 w-full grid-cols-[48px_1px_minmax(0,1fr)_28px] items-center gap-x-4 py-4 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#B1845F]"
+              className="grid min-h-16 w-full grid-cols-[48px_1px_minmax(0,1fr)_28px] items-center gap-x-4 py-4 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-brand-primary)]"
             >
               <span
                 className={clsx(
                   frauncesClassName,
-                  "text-[1.75rem] leading-none text-[#B1845F]",
+                  "text-[1.75rem] leading-none text-[var(--color-brand-primary)]",
                 )}
                 aria-hidden="true"
               >
                 {service.number}
               </span>
-              <span aria-hidden="true" className="h-10 w-px bg-[#DCCFC1]" />
+              <span aria-hidden="true" className="h-10 w-px bg-[var(--color-brand-primary-border)]" />
               <span
                 className={clsx(
                   frauncesClassName,
@@ -651,7 +654,7 @@ function MobileServiceAccordion({
               </span>
               <Plus
                 className={clsx(
-                  "size-5 text-[#A58162] transition-transform duration-300",
+                  "size-5 text-[var(--color-brand-primary)] transition-transform duration-300",
                   isActive && "rotate-45",
                 )}
                 aria-hidden="true"
@@ -669,10 +672,10 @@ function MobileServiceAccordion({
               )}
             >
               <div className="min-h-0 overflow-hidden">
-                <p className="pb-5 pl-16 text-[0.95rem] font-semibold leading-6 text-[#716B66]">
+                <p className="pb-5 pl-16 text-[0.95rem] font-semibold leading-6 text-[var(--color-text-muted)]">
                   {service.description}
                 </p>
-                <figure className="overflow-hidden rounded-[12px] bg-[#F5F0E9]">
+                <figure className="overflow-hidden rounded-[12px] bg-[var(--color-surface-warm)]">
                   <div className="relative aspect-[4/5] overflow-hidden">
                     <Image
                       src={service.image.src}
@@ -686,25 +689,27 @@ function MobileServiceAccordion({
                       style={{ objectPosition: service.image.position }}
                     />
                   </div>
-                  <figcaption className="flex items-center justify-between gap-4 bg-[#F7F2EC] px-4 py-4">
-                    <span className="text-xs font-extrabold uppercase tracking-[0.16em] text-[#9A6E4C]">
+                  <figcaption className="flex items-center justify-between gap-4 bg-[var(--color-surface)] px-4 py-4">
+                    <span className="text-xs font-extrabold uppercase tracking-[0.16em] text-[var(--color-brand-primary)]">
                       {service.caption}
                     </span>
-                    <span className="text-xs font-bold text-[#716B66]">
+                    <span className="text-xs font-bold text-[var(--color-text-muted)]">
                       {service.number} / 06
                     </span>
                   </figcaption>
                 </figure>
-                <a
-                  href={whatsappHref(whatsappPhone, service.whatsappMessage)}
-                  target="_blank"
-                  rel="noreferrer"
-                  tabIndex={isActive ? 0 : -1}
-                  className="mb-7 mt-4 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md border border-[#B1845F] px-4 text-sm font-extrabold text-[#8C6546] transition-colors hover:bg-[#F5F0E9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#B1845F]"
-                >
-                  <MessageCircle className="size-4" aria-hidden="true" />
-                  Conversar sobre este serviço
-                </a>
+                <PremiumAction asChild size="md" fullWidth className="mb-7 mt-4">
+                  <a
+                    href={whatsappHref(whatsappPhone, service.whatsappMessage)}
+                    target="_blank"
+                    rel="noreferrer"
+                    tabIndex={isActive ? 0 : -1}
+                  >
+                    <MessageCircle data-premium-leading aria-hidden="true" />
+                    <span>Conversar sobre este serviço</span>
+                    <ArrowRight data-premium-arrow aria-hidden="true" />
+                  </a>
+                </PremiumAction>
               </div>
             </div>
           </li>

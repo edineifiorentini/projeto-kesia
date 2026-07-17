@@ -312,7 +312,7 @@ const ptBR = {
     email: "E-mail",
     password: "Senha",
     submit: "Entrar",
-    demoHint: "Demo: edineif@gmail.com / @135LuccaDutra",
+    demoHint: "Use as credenciais definidas no ambiente seguro.",
     invalidCredentials: "Credenciais inválidas.",
   },
 };
@@ -626,7 +626,7 @@ const enUS: typeof ptBR = {
     email: "Email",
     password: "Password",
     submit: "Sign in",
-    demoHint: "Demo: edineif@gmail.com / @135LuccaDutra",
+    demoHint: "Use the credentials configured in the secure environment.",
     invalidCredentials: "Invalid credentials.",
   },
 };
@@ -940,7 +940,7 @@ const esES: typeof ptBR = {
     email: "Correo",
     password: "Contraseña",
     submit: "Entrar",
-    demoHint: "Demo: edineif@gmail.com / @135LuccaDutra",
+    demoHint: "Use las credenciales configuradas en el entorno seguro.",
     invalidCredentials: "Credenciales inválidas.",
   },
 };

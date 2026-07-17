@@ -11,6 +11,7 @@ import { PortfolioSection } from "@/components/landing/portfolio-section";
 import { ScrollHeroExperience } from "@/components/landing/scroll-hero-experience";
 import { ServicesSection } from "@/components/landing/services-section";
 import { SiteFooter } from "@/components/landing/site-footer";
+import { TabTitleRotator } from "@/components/landing/tab-title-rotator";
 import { WhatsAppTestimonialsSection } from "@/components/landing/whatsapp-testimonials-section";
 import { landingPageData } from "@/lib/landing-page-data";
 
@@ -43,7 +44,7 @@ function WhatsAppFloatingButton() {
       href={whatsappHref()}
       target="_blank"
       rel="noreferrer"
-      className="pointer-events-none fixed bottom-5 right-5 z-40 inline-flex size-13 items-center justify-center rounded-full bg-[#1FA855] text-white opacity-0 shadow-lg shadow-black/20 transition hover:-translate-y-0.5 hover:bg-[#168744] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1FA855]"
+      className="pointer-events-none fixed bottom-5 right-5 z-40 inline-flex size-13 items-center justify-center rounded-full bg-[var(--color-success)] text-white opacity-0 shadow-lg shadow-black/20 transition hover:-translate-y-0.5 hover:bg-[var(--color-success)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-success)]"
       aria-label="Falar pelo WhatsApp"
     >
       <MessageCircle className="size-6" aria-hidden="true" />
@@ -53,7 +54,8 @@ function WhatsAppFloatingButton() {
 
 export function LandingPage() {
   return (
-    <main className={clsx(nunitoSans.className, "min-h-screen bg-[#F4E8DA] text-[#5F4B43]")}>
+    <main className={clsx(nunitoSans.className, "min-h-screen bg-[var(--color-background)] text-[var(--color-text)]")}>
+      <TabTitleRotator />
       <ScrollHeroExperience
         bookingPath={d.bookingPath}
         frauncesClassName={fraunces.className}
@@ -113,7 +115,6 @@ export function LandingPage() {
         instagramHandle={d.instagram}
         instagramUrl={d.instagramUrl}
         address={d.address}
-        frauncesClassName={fraunces.className}
         nunitoClassName={nunitoSans.className}
       />
       <WhatsAppFloatingButton />

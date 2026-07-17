@@ -17,8 +17,8 @@ export function LoginForm({
   invalidCredentialsLabel: string;
 }) {
   const router = useRouter();
-  const [email, setEmail] = useState("edineif@gmail.com");
-  const [password, setPassword] = useState("@135LuccaDutra");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 

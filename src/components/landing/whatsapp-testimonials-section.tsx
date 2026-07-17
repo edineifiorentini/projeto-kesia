@@ -14,6 +14,7 @@ import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
+  ArrowRight,
   ChevronLeft,
   ChevronRight,
   MessageCircle,
@@ -25,6 +26,7 @@ import {
   renderableTestimonials,
   type WhatsAppTestimonial,
 } from "@/lib/testimonials-repository";
+import { PremiumAction } from "@/components/ui/premium-action";
 
 type WhatsAppTestimonialsSectionProps = {
   frauncesClassName: string;
@@ -393,10 +395,11 @@ export function WhatsAppTestimonialsSection({
     <section
       ref={sectionRef}
       id="depoimentos"
+      role="region"
       aria-labelledby="depoimentos-titulo"
       className={clsx(
         nunitoClassName,
-        "relative overflow-clip bg-[#FBF8F3] px-6 py-[92px] text-[#261D18] md:px-10 md:py-[110px] min-[1200px]:px-[clamp(48px,5vw,88px)] min-[1200px]:py-[clamp(110px,9vw,180px)]",
+        "relative overflow-clip bg-[var(--color-background)] px-6 py-[92px] text-[var(--color-text-strong)] md:px-10 md:py-[110px] min-[1200px]:px-[clamp(48px,5vw,88px)] min-[1200px]:py-[clamp(110px,9vw,180px)]",
       )}
     >
       <div className="testimonials-editorial-layout mx-auto max-w-[1660px]">
@@ -439,25 +442,28 @@ export function WhatsAppTestimonialsSection({
             </>
           ) : null}
 
-          <a
-            href={whatsappHref(whatsappPhone)}
-            target="_blank"
-            rel="noreferrer"
-            className="mt-8 inline-flex min-h-12 w-full items-center justify-center gap-2.5 rounded-md bg-[#B46F4B] px-6 text-sm font-extrabold text-white shadow-[0_12px_28px_rgba(91,52,32,0.14)] transition-colors duration-300 hover:bg-[#9E5C3D] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#9E5C3D] sm:w-auto"
-          >
-            <MessageCircle className="size-4" aria-hidden="true" />
-            Quero viver essa experiência
-          </a>
+          <PremiumAction asChild size="md" className="mt-8">
+            <a
+              href={whatsappHref(whatsappPhone)}
+              target="_blank"
+              rel="noreferrer"
+              className="w-full sm:w-auto"
+            >
+              <MessageCircle data-premium-leading aria-hidden="true" />
+              <span>Quero viver essa experiência</span>
+              <ArrowRight data-premium-arrow aria-hidden="true" />
+            </a>
+          </PremiumAction>
 
-          <p className="mt-5 flex max-w-[520px] items-start gap-2.5 text-xs font-bold leading-5 text-[#746A62]">
-            <ShieldCheck className="mt-0.5 size-4 shrink-0 text-[#B46F4B]" aria-hidden="true" />
+          <p className="mt-5 flex max-w-[520px] items-start gap-2.5 text-xs font-bold leading-5 text-[var(--color-text-muted)]">
+            <ShieldCheck className="mt-0.5 size-4 shrink-0 text-[var(--color-brand-primary)]" aria-hidden="true" />
             {!rotation.activeItem
               ? "Depoimentos reais serão publicados somente após autorização e proteção dos dados pessoais."
               : rotation.activeItem.developmentOnly
                 ? "Prévia técnica sem dados reais. Este material não é publicado em produção."
                 : "Depoimentos publicados com autorização e dados pessoais protegidos."}
           </p>
-          <p className="mt-5 text-sm font-semibold italic text-[#806E62]">
+          <p className="mt-5 text-sm font-semibold italic text-[var(--color-text-muted)]">
             Mais do que penteados, memórias que ficam.
           </p>
           <span className="sr-only" aria-live="polite">
@@ -474,11 +480,11 @@ function TestimonialsIntro({ frauncesClassName }: { frauncesClassName: string })
     <header className="testimonials-intro max-w-[720px]">
       <div
         data-testimonials-eyebrow
-        className="flex items-center gap-3 text-[0.72rem] font-extrabold uppercase leading-4 tracking-[0.2em] text-[#AA7652]"
+        className="flex items-center gap-3 text-[0.72rem] font-extrabold uppercase leading-4 tracking-[0.2em] text-[var(--color-brand-primary)]"
       >
         <Sparkles className="size-4 shrink-0" aria-hidden="true" />
         <span>Depoimentos</span>
-        <span className="h-px w-12 bg-[#AA7652]/60" aria-hidden="true" />
+        <span className="h-px w-12 bg-[var(--color-brand-primary)]/60" aria-hidden="true" />
       </div>
       <h2
         id="depoimentos-titulo"
@@ -498,14 +504,14 @@ function TestimonialsIntro({ frauncesClassName }: { frauncesClassName: string })
           </span>
         </span>
         <span className="block overflow-hidden pb-[0.09em]">
-          <span data-testimonials-headline-line className="block italic text-[#6D4B36]">
+          <span data-testimonials-headline-line className="block italic text-[var(--color-text)]">
             esse momento.
           </span>
         </span>
       </h2>
       <p
         data-testimonials-supporting
-        className="mt-6 max-w-[560px] text-[clamp(1rem,1.2vw,1.2rem)] font-semibold leading-[1.65] text-[#746A62]"
+        className="mt-6 max-w-[560px] text-[clamp(1rem,1.2vw,1.2rem)] font-semibold leading-[1.65] text-[var(--color-text-muted)]"
       >
         Cada mensagem carrega mais do que palavras: confiança, gratidão e a
         certeza de ter feito a escolha certa.
@@ -555,10 +561,10 @@ function TestimonialScreenshotStage({
 }) {
   if (!activeItem) {
     return (
-      <div className="absolute inset-0 grid place-items-center bg-[#EEE9E2] px-8 text-center">
+      <div className="absolute inset-0 grid place-items-center bg-[var(--color-surface-warm)] px-8 text-center">
         <div className="max-w-[230px]">
-          <ShieldCheck className="mx-auto size-8 text-[#AA7652]" aria-hidden="true" />
-          <p className="mt-4 text-sm font-extrabold leading-6 text-[#5F5148]">
+          <ShieldCheck className="mx-auto size-8 text-[var(--color-brand-primary)]" aria-hidden="true" />
+          <p className="mt-4 text-sm font-extrabold leading-6 text-[var(--color-text)]">
             Depoimentos autorizados serão exibidos aqui.
           </p>
         </div>
@@ -567,7 +573,7 @@ function TestimonialScreenshotStage({
   }
 
   return (
-    <div className="absolute inset-0 overflow-hidden bg-[#EEE9E2]">
+    <div className="absolute inset-0 overflow-hidden bg-[var(--color-surface-warm)]">
       {previousItem ? (
         <TestimonialScreenshot
           key={`outgoing-${previousItem.id}`}
@@ -623,8 +629,8 @@ function TestimonialScreenshot({
           alt={ariaHidden ? "" : item.altText}
           fill
           unoptimized={item.screenshotUrl.endsWith(".svg")}
-          priority={!ariaHidden && item.sortOrder === 1}
           sizes="(min-width: 1100px) 450px, (min-width: 768px) 390px, 82vw"
+          quality={92}
           className="object-cover"
           style={{ objectPosition: item.screenPosition ?? "center top" }}
         />
@@ -655,16 +661,16 @@ function TestimonialProgress({
 
   return (
     <div className="flex items-center gap-4" aria-label="Progresso dos depoimentos">
-      <p className="min-w-[72px] text-sm font-extrabold text-[#6D4B36]">
+      <p className="min-w-[72px] text-sm font-extrabold text-[var(--color-text)]">
         {activeItem ? String(activeIndex + 1).padStart(2, "0") : "00"}
-        <span className="mx-1.5 text-[#B8A99E]">/</span>
-        <span className="text-[#9A8B81]">{String(items.length).padStart(2, "0")}</span>
+        <span className="mx-1.5 text-[var(--color-text-muted)]">/</span>
+        <span className="text-[var(--color-text-muted)]">{String(items.length).padStart(2, "0")}</span>
       </p>
-      <div className="h-0.5 w-[clamp(150px,20vw,240px)] overflow-hidden bg-[#B46F4B]/18">
+      <div className="h-0.5 w-[clamp(150px,20vw,240px)] overflow-hidden bg-[var(--color-brand-primary)]/18">
         {activeItem ? (
           <span
             key={`${activeItem.id}-${progressCycle}`}
-            className="testimonial-progress-fill block h-full origin-left bg-[#B46F4B]"
+            className="testimonial-progress-fill block h-full origin-left bg-[var(--color-brand-primary)]"
             style={progressStyle}
           />
         ) : null}
@@ -697,10 +703,10 @@ function TestimonialNavigation({
             type="button"
             onClick={() => onSelect(index)}
             className={clsx(
-              "border-b pb-1 text-xs font-extrabold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#AA7652]",
+              "border-b pb-1 text-xs font-extrabold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-brand-primary)]",
               index === activeIndex
-                ? "border-[#AA7652] text-[#4D392E]"
-                : "border-transparent text-[#9A8B81] hover:text-[#6D4B36]",
+                ? "border-[var(--color-brand-primary)] text-[var(--color-text)]"
+                : "border-transparent text-[var(--color-text-muted)] hover:text-[var(--color-text)]",
             )}
             aria-pressed={index === activeIndex}
           >
@@ -713,7 +719,7 @@ function TestimonialNavigation({
           type="button"
           onClick={onPrevious}
           disabled={disabled}
-          className="grid size-11 place-items-center rounded-full border border-[#B49A87]/50 text-[#6D4B36] transition-colors hover:bg-[#F4E9DD] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#AA7652] disabled:cursor-not-allowed disabled:opacity-35"
+          className="grid size-11 place-items-center rounded-full border border-[var(--color-border-strong)] text-[var(--color-text)] transition-colors hover:bg-[var(--color-surface-warm)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-brand-primary)] disabled:cursor-not-allowed disabled:opacity-35"
           aria-label="Depoimento anterior"
         >
           <ChevronLeft className="size-4" aria-hidden="true" />
@@ -722,7 +728,7 @@ function TestimonialNavigation({
           type="button"
           onClick={onNext}
           disabled={disabled}
-          className="grid size-11 place-items-center rounded-full border border-[#B49A87]/50 text-[#6D4B36] transition-colors hover:bg-[#F4E9DD] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#AA7652] disabled:cursor-not-allowed disabled:opacity-35"
+          className="grid size-11 place-items-center rounded-full border border-[var(--color-border-strong)] text-[var(--color-text)] transition-colors hover:bg-[var(--color-surface-warm)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-brand-primary)] disabled:cursor-not-allowed disabled:opacity-35"
           aria-label="Próximo depoimento"
         >
           <ChevronRight className="size-4" aria-hidden="true" />

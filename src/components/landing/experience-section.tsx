@@ -305,10 +305,11 @@ export function ExperienceSection({
     <section
       ref={sectionRef}
       id="experiencia"
+      role="region"
       aria-labelledby="experiencia-titulo"
       className={clsx(
         nunitoClassName,
-        "relative overflow-clip bg-[#FBFAF8] px-6 py-24 text-[#1E1B19] sm:px-8 lg:px-[clamp(32px,5vw,88px)] lg:py-[clamp(96px,8vw,150px)]",
+        "relative overflow-clip bg-[var(--color-surface)] px-6 py-24 text-[var(--color-text-strong)] sm:px-8 lg:px-[clamp(32px,5vw,88px)] lg:py-[clamp(96px,8vw,150px)]",
       )}
     >
       <span
@@ -316,7 +317,7 @@ export function ExperienceSection({
         aria-hidden="true"
         className={clsx(
           frauncesClassName,
-          "pointer-events-none absolute -right-12 top-16 hidden select-none text-[clamp(9rem,17vw,18rem)] font-normal leading-none tracking-normal text-[rgba(79,62,48,0.035)] xl:block",
+          "pointer-events-none absolute -right-12 top-16 hidden select-none text-[clamp(9rem,17vw,18rem)] font-normal leading-none tracking-normal text-[var(--color-brand-watermark)] xl:block",
         )}
       >
         ESSÊNCIA
@@ -355,14 +356,14 @@ function ExperienceIntro({
       <div
         data-experience-eyebrow
         data-experience-mobile-reveal
-        className="flex items-center gap-3 text-[0.68rem] font-extrabold uppercase leading-4 tracking-normal text-[#9A7E60] sm:text-xs"
+        className="flex items-center gap-3 text-[0.68rem] font-extrabold uppercase leading-4 tracking-normal text-[var(--color-brand-primary)] sm:text-xs"
       >
         <Sparkles className="size-4 shrink-0" aria-hidden="true" />
         <span>A experiência</span>
         <span
           data-experience-eyebrow-line
           aria-hidden="true"
-          className="h-px w-12 bg-[#B49A7A]/70"
+          className="h-px w-12 bg-[var(--color-brand-primary)]/70"
         />
       </div>
 
@@ -370,7 +371,7 @@ function ExperienceIntro({
         id="experiencia-titulo"
         className={clsx(
           frauncesClassName,
-          "mt-7 text-[clamp(2.45rem,10vw,3.2rem)] font-normal leading-[0.94] tracking-normal text-[#1E1B19] md:text-[clamp(3.3rem,6vw,5rem)] lg:text-[clamp(2rem,3.4vw,3.2rem)] xl:text-[clamp(2rem,2.65vw,3.2rem)]",
+          "mt-7 text-[clamp(2.45rem,10vw,3.2rem)] font-normal leading-[0.94] tracking-normal text-[var(--color-text-strong)] md:text-[clamp(3.3rem,6vw,5rem)] lg:text-[clamp(2rem,3.4vw,3.2rem)] xl:text-[clamp(2rem,2.65vw,3.2rem)]",
         )}
       >
         {[
@@ -393,7 +394,7 @@ function ExperienceIntro({
       <p
         data-experience-supporting
         data-experience-mobile-reveal
-        className="mt-7 max-w-[560px] text-[0.98rem] font-semibold leading-[1.7] text-[#716B66] sm:text-[1.05rem]"
+        className="mt-7 max-w-[560px] text-[0.98rem] font-semibold leading-[1.7] text-[var(--color-text-muted)] sm:text-[1.05rem]"
       >
         Cada penteado é pensado para valorizar sua essência e acompanhar um dos
         momentos mais especiais da sua história.
@@ -439,19 +440,19 @@ function ExperienceFeatureItem({
       <span
         data-experience-divider
         aria-hidden="true"
-        className="absolute inset-x-0 top-0 h-px bg-[rgba(79,62,48,0.14)]"
+        className="absolute inset-x-0 top-0 h-px bg-[var(--color-border)]"
       />
       <span
         data-experience-number
         className={clsx(
           frauncesClassName,
-          "text-[2.15rem] font-normal leading-none tracking-normal text-[#B49A7A]/80 sm:text-[2.65rem]",
+          "text-[2.15rem] font-normal leading-none tracking-normal text-[var(--color-brand-primary)]/80 sm:text-[2.65rem]",
         )}
         aria-hidden="true"
       >
         {feature.number}
       </span>
-      <span aria-hidden="true" className="h-full w-px bg-[rgba(79,62,48,0.14)]" />
+      <span aria-hidden="true" className="h-full w-px bg-[var(--color-border)]" />
       <span
         data-experience-feature-content
         className="block min-w-0 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1.5"
@@ -459,12 +460,12 @@ function ExperienceFeatureItem({
         <span
           className={clsx(
             frauncesClassName,
-            "block text-[clamp(1.45rem,1.8vw,2rem)] font-normal leading-[1.1] tracking-normal text-[#2B2724] transition-colors duration-300 group-hover:text-[#1E1B19]",
+            "block text-[clamp(1.45rem,1.8vw,2rem)] font-normal leading-[1.1] tracking-normal text-[var(--color-text-strong)] transition-colors duration-300 group-hover:text-[var(--color-text-strong)]",
           )}
         >
           {feature.title}
         </span>
-        <span className="mt-3 block text-sm font-semibold leading-6 text-[#716B66] sm:text-[0.96rem] sm:leading-7">
+        <span className="mt-3 block text-sm font-semibold leading-6 text-[var(--color-text-muted)] sm:text-[0.96rem] sm:leading-7">
           {feature.description}
         </span>
       </span>
@@ -529,7 +530,7 @@ function EditorialImage({
       data-experience-frame
       data-experience-mobile-reveal
       className={clsx(
-        "group relative min-h-0 overflow-hidden rounded-[16px] bg-[#F6F1EB] shadow-[0_18px_50px_rgba(48,35,25,0.055)]",
+        "group relative min-h-0 overflow-hidden rounded-[16px] bg-[var(--color-surface-warm)] shadow-[var(--shadow-soft)]",
         className,
       )}
     >
@@ -547,7 +548,8 @@ function EditorialImage({
             width={image.width}
             height={image.height}
             sizes={sizes}
-            loading={motion === "main" ? "eager" : "lazy"}
+            quality={92}
+            loading="lazy"
             className="h-full w-full object-cover"
             style={{ objectPosition: image.focalPosition }}
           />
@@ -555,7 +557,7 @@ function EditorialImage({
       </div>
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[rgba(48,35,25,0.06)] transition-colors duration-700 group-hover:bg-transparent"
+        className="pointer-events-none absolute inset-0 bg-[var(--color-overlay-subtle)] transition-colors duration-700 group-hover:bg-transparent"
       />
       {image.caption ? (
         <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/35 to-transparent px-4 pb-3 pt-10 text-[0.68rem] font-bold text-white/90 opacity-0 transition-opacity duration-500 group-hover:opacity-100 sm:px-5 sm:pb-4">

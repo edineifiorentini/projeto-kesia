@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /login/
+
+Sitemap: https://edineifiorentini.github.io/projeto-kesia/sitemap.xml

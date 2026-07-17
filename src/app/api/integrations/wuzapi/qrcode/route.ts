@@ -1,7 +1,12 @@
-import { NextResponse } from "next/server";
-import { getCurrentSession } from "@/lib/auth/session";
 import { createWuzApiClientFromEnv } from "@/lib/integrations/wuzapi";
 import type { WuzApiSessionStatus } from "@/lib/integrations/wuzapi";
+import {
+  apiJson,
+  rejectCrossSiteMutation,
+  reportServerError,
+  requireApiSession,
+  requireJsonRequest,
+} from "@/lib/security/api";
 import { wuzApiQrCodeRequestSchema } from "@/lib/validation/schemas";
 
 function isConnected(status: WuzApiSessionStatus | null | undefined) {
@@ -10,16 +15,6 @@ function isConnected(status: WuzApiSessionStatus | null | undefined) {
 
 function isLoggedIn(status: WuzApiSessionStatus | null | undefined) {
   return Boolean(status?.LoggedIn ?? status?.loggedIn);
-}
-
-async function requireAdminSession() {
-  const session = await getCurrentSession();
-
-  if (!session) {
-    return NextResponse.json({ error: "unauthorized" }, { status: 401 });
-  }
-
-  return null;
 }
 
 async function requestQrCode({ forceNew }: { forceNew: boolean }) {
@@ -58,50 +53,38 @@ async function requestQrCode({ forceNew }: { forceNew: boolean }) {
 }
 
 export async function GET() {
-  const unauthorized = await requireAdminSession();
-
-  if (unauthorized) {
-    return unauthorized;
-  }
+  const auth = await requireApiSession("settings:manage");
+  if (auth.response) return auth.response;
 
   try {
     const result = await requestQrCode({ forceNew: false });
-    return NextResponse.json(result);
+    return apiJson(result);
   } catch (error) {
-    return NextResponse.json(
-      {
-        error: "wuzapi_qrcode_failed",
-        message: error instanceof Error ? error.message : "Unknown error",
-      },
-      { status: 503 },
-    );
+    reportServerError("wuzapi-qrcode-read", error);
+    return apiJson({ error: "wuzapi_qrcode_failed" }, { status: 503 });
   }
 }
 
 export async function POST(request: Request) {
-  const unauthorized = await requireAdminSession();
-
-  if (unauthorized) {
-    return unauthorized;
-  }
+  const auth = await requireApiSession("settings:manage");
+  if (auth.response) return auth.response;
+  const crossSite = rejectCrossSiteMutation(request);
+  if (crossSite) return crossSite;
+  const invalidType = requireJsonRequest(request);
+  if (invalidType) return invalidType;
 
   const payload = await request.json().catch(() => ({}));
   const parsed = wuzApiQrCodeRequestSchema.safeParse(payload);
 
   if (!parsed.success) {
-    return NextResponse.json({ error: "invalid_payload" }, { status: 400 });
+    return apiJson({ error: "invalid_payload" }, { status: 400 });
   }
 
   try {
     const result = await requestQrCode({ forceNew: parsed.data.forceNew });
-    return NextResponse.json(result);
+    return apiJson(result);
   } catch (error) {
-    return NextResponse.json(
-      {
-        error: "wuzapi_qrcode_failed",
-        message: error instanceof Error ? error.message : "Unknown error",
-      },
-      { status: 503 },
-    );
+    reportServerError("wuzapi-qrcode-create", error);
+    return apiJson({ error: "wuzapi_qrcode_failed" }, { status: 503 });
   }
 }

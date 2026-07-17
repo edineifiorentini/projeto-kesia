@@ -15,6 +15,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
+  ArrowRight,
   CalendarDays,
   ChevronLeft,
   ChevronRight,
@@ -28,6 +29,7 @@ import {
   portfolioImages,
   type PortfolioImage,
 } from "@/lib/portfolio-repository";
+import { PremiumAction } from "@/components/ui/premium-action";
 
 type PortfolioSectionProps = {
   bookingPath: string;
@@ -664,7 +666,7 @@ export function PortfolioSection({
         aria-labelledby="portfolio-titulo"
         className={clsx(
           nunitoClassName,
-          "relative overflow-clip bg-[#FBF8F3] px-6 py-[92px] text-[#241C17] md:px-10 md:py-[110px] min-[1200px]:px-[clamp(48px,5vw,88px)] min-[1200px]:py-[clamp(110px,9vw,180px)]",
+          "portfolio-brand-section relative overflow-clip bg-[var(--color-background)] px-6 py-[92px] text-[var(--color-text-strong)] md:px-10 md:py-[110px] min-[1200px]:px-[clamp(48px,5vw,88px)] min-[1200px]:py-[clamp(110px,9vw,180px)]",
         )}
       >
         <span id="galeria" aria-hidden="true" className="absolute top-0" />
@@ -706,14 +708,14 @@ function PortfolioIntro({ frauncesClassName }: { frauncesClassName: string }) {
       <div
         data-portfolio-eyebrow
         data-portfolio-mobile-intro
-        className="flex items-center gap-3 text-[0.72rem] font-extrabold uppercase leading-4 tracking-[0.22em] text-[#AA7652]"
+        className="flex items-center gap-3 text-[0.72rem] font-extrabold uppercase leading-4 tracking-[0.22em] text-[var(--color-text-editorial-contrast)]"
       >
         <Sparkles className="size-4 shrink-0" aria-hidden="true" />
         <span>Portfólio</span>
         <span
           data-portfolio-eyebrow-line
           aria-hidden="true"
-          className="h-px w-12 bg-[#AA7652]/60"
+          className="h-px w-12 bg-[var(--color-text-editorial-contrast)]"
         />
       </div>
 
@@ -732,7 +734,7 @@ function PortfolioIntro({ frauncesClassName }: { frauncesClassName: string }) {
         </span>
         <span className="block overflow-hidden pb-[0.09em]">
           <span data-portfolio-headline-line className="block">
-            histórias que <em className="font-normal text-[#6D4B36]">permanecem.</em>
+            histórias que <em className="font-normal text-[var(--color-text)]">permanecem.</em>
           </span>
         </span>
       </h2>
@@ -740,7 +742,7 @@ function PortfolioIntro({ frauncesClassName }: { frauncesClassName: string }) {
       <p
         data-portfolio-supporting
         data-portfolio-mobile-intro
-        className="mt-5 max-w-[650px] text-[1rem] font-semibold leading-7 text-[#746A62] md:text-[1.08rem]"
+        className="mt-5 max-w-[650px] text-[1rem] font-semibold leading-7 text-[var(--color-text-muted)] md:text-[1.08rem]"
       >
         Cada penteado nasce de um momento, uma personalidade e uma forma única de se sentir bonita.
       </p>
@@ -815,7 +817,7 @@ function PortfolioSlot({
       <li
         data-portfolio-reveal
         data-portfolio-slot={config.id}
-        className="portfolio-slot bg-[#EDE4DB]"
+        className="portfolio-slot bg-[var(--color-background-alt)]"
         aria-hidden="true"
       />
     );
@@ -842,7 +844,7 @@ function PortfolioSlot({
         data-current-image={item.id}
         data-transitioning={previousItem ? "true" : "false"}
         onClick={(event) => onOpen(item.id, event.currentTarget)}
-        className="relative h-full w-full overflow-hidden rounded-[14px] bg-[#EDE4DB] text-left shadow-[0_18px_45px_rgba(58,38,24,0.05)] outline-none transition-shadow duration-500 focus-visible:ring-2 focus-visible:ring-[#AA7652] focus-visible:ring-offset-4 focus-visible:ring-offset-[#FBF8F3]"
+        className="relative h-full w-full overflow-hidden rounded-[14px] bg-[var(--color-background-alt)] text-left shadow-[var(--shadow-soft)] outline-none transition-shadow duration-500 focus-visible:ring-2 focus-visible:ring-[var(--color-brand-primary)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--color-background)]"
         aria-label={`${category}: ${item.title}. Abrir imagem ampliada.`}
       >
         <span data-portfolio-parallax className="absolute -inset-6 will-change-transform">
@@ -868,15 +870,15 @@ function PortfolioSlot({
 
         <span
           aria-hidden="true"
-          className="portfolio-slot-overlay absolute inset-0 z-[2] bg-[linear-gradient(to_bottom,rgba(25,17,12,0)_34%,rgba(25,17,12,0.08)_55%,rgba(25,17,12,0.72)_100%)] transition-colors duration-500"
+          className="portfolio-slot-overlay absolute inset-0 z-[2] bg-[var(--gradient-image-overlay-soft)] transition-colors duration-500"
         />
 
         <span
           key={`caption-${item.id}`}
-          className="portfolio-slot-caption absolute inset-x-[clamp(18px,1.7vw,26px)] bottom-[clamp(18px,1.8vw,25px)] z-[3] max-w-[310px] text-[#FFFDF9]"
+          className="portfolio-slot-caption absolute inset-x-[clamp(18px,1.7vw,26px)] bottom-[clamp(18px,1.8vw,25px)] z-[3] max-w-[310px] text-[var(--color-surface)]"
         >
-          <span className="block h-px w-9 bg-[#D8A986]" aria-hidden="true" />
-          <span className="mt-2 block text-[0.68rem] font-extrabold uppercase leading-4 tracking-[0.1em] text-[#FFFDF9]/90">
+          <span className="block h-px w-9 bg-[var(--color-brand-primary)]" aria-hidden="true" />
+          <span className="mt-2 block text-[0.68rem] font-extrabold uppercase leading-4 tracking-[0.1em] text-[var(--color-surface)]/90">
             {category}
           </span>
           <span
@@ -917,9 +919,9 @@ function PortfolioImageLayer({
         src={item.imageUrl}
         alt={ariaHidden ? "" : item.altText}
         fill
-        unoptimized
         loading="lazy"
         sizes={sizes}
+        quality={92}
         className="object-cover"
         style={{ objectPosition: item.imagePosition }}
       />
@@ -932,19 +934,19 @@ function PortfolioQuoteCell({ frauncesClassName }: { frauncesClassName: string }
     <li
       data-portfolio-reveal
       data-portfolio-quote
-      className="portfolio-quote-cell grid place-items-center rounded-[14px] bg-[#F6EDE4] px-7 py-9 text-center"
+      className="portfolio-quote-cell grid place-items-center rounded-[14px] bg-[var(--color-surface-warm)] px-7 py-9 text-center"
     >
       <div className="max-w-[330px]">
-        <Sparkles className="mx-auto size-5 text-[#AA7652]" aria-hidden="true" />
+        <Sparkles className="mx-auto size-5 text-[var(--color-brand-primary)]" aria-hidden="true" />
         <blockquote
           className={clsx(
             frauncesClassName,
-            "mt-4 text-[clamp(1.6rem,2.1vw,2.35rem)] font-normal leading-[1.05] tracking-normal text-[#3A2A20]",
+            "mt-4 text-[clamp(1.6rem,2.1vw,2.35rem)] font-normal leading-[1.05] tracking-normal text-[var(--color-text-strong)]",
           )}
         >
           Cada detalhe pensado para que você continue sendo você, ainda mais bonita.
         </blockquote>
-        <p className="mt-5 text-[0.68rem] font-extrabold uppercase tracking-[0.16em] text-[#AA7652]">
+        <p className="mt-5 text-[0.68rem] font-extrabold uppercase tracking-[0.16em] text-[var(--color-brand-primary)]">
           Késia Dutra
         </p>
       </div>
@@ -962,25 +964,25 @@ function PortfolioClosingCTA({
   return (
     <div data-portfolio-cta className="mt-[clamp(38px,4vw,58px)] text-center">
       <div className="flex items-center justify-center gap-4">
-        <span className="h-px w-10 bg-[#D8C1AD] sm:w-20" aria-hidden="true" />
-        <Sparkles className="size-4 text-[#AA7652]" aria-hidden="true" />
-        <span className="h-px w-10 bg-[#D8C1AD] sm:w-20" aria-hidden="true" />
+        <span className="h-px w-10 bg-[var(--color-brand-primary-border)] sm:w-20" aria-hidden="true" />
+        <Sparkles className="size-4 text-[var(--color-brand-primary)]" aria-hidden="true" />
+        <span className="h-px w-10 bg-[var(--color-brand-primary-border)] sm:w-20" aria-hidden="true" />
       </div>
       <p
         className={clsx(
           frauncesClassName,
-          "mx-auto mt-4 max-w-[620px] text-[clamp(1.55rem,2.3vw,2.25rem)] font-normal leading-tight tracking-normal text-[#3A2A20]",
+          "mx-auto mt-4 max-w-[620px] text-[clamp(1.55rem,2.3vw,2.25rem)] font-normal leading-tight tracking-normal text-[var(--color-text-strong)]",
         )}
       >
         Imaginou seu penteado entre essas histórias?
       </p>
-      <Link
-        href={bookingPath}
-        className="mt-5 inline-flex min-h-12 items-center justify-center gap-2.5 rounded-md bg-[#B76F49] px-6 text-sm font-extrabold text-white shadow-[0_12px_28px_rgba(105,60,38,0.15)] transition-colors duration-300 hover:bg-[#A25D3C] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#A25D3C]"
-      >
-        <CalendarDays className="size-4" aria-hidden="true" />
-        Agendar uma conversa
-      </Link>
+      <PremiumAction asChild size="md" variant="outlineOnDark" className="mt-5">
+        <Link prefetch={false} href={bookingPath}>
+          <CalendarDays data-premium-leading aria-hidden="true" />
+          <span>Agendar uma conversa</span>
+          <ArrowRight data-premium-arrow aria-hidden="true" />
+        </Link>
+      </PremiumAction>
     </div>
   );
 }
@@ -1023,7 +1025,7 @@ function PortfolioLightbox({
 
   return (
     <Dialog.Portal>
-      <Dialog.Overlay className="fixed inset-0 z-[90] bg-[rgba(20,15,12,0.94)] data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
+      <Dialog.Overlay className="fixed inset-0 z-[90] bg-[var(--color-overlay-modal)] data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0" />
       {selectedItem ? (
         <Dialog.Content
           aria-describedby="portfolio-lightbox-description"
@@ -1031,7 +1033,7 @@ function PortfolioLightbox({
             event.preventDefault();
             restoreFocusRef.current?.focus();
           }}
-          className="fixed inset-0 z-[100] grid overflow-y-auto bg-[#17110E] text-white outline-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0 md:inset-6 md:grid-cols-[minmax(0,1fr)_minmax(280px,360px)] md:overflow-hidden md:rounded-lg lg:inset-10"
+          className="fixed inset-0 z-[100] grid overflow-y-auto bg-[var(--color-text-strong)] text-white outline-none data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0 md:inset-6 md:grid-cols-[minmax(0,1fr)_minmax(280px,360px)] md:overflow-hidden md:rounded-lg lg:inset-10"
         >
           <div className="relative min-h-[62svh] overflow-hidden bg-black/20 md:min-h-0">
             <Image
@@ -1039,9 +1041,9 @@ function PortfolioLightbox({
               src={selectedItem.imageUrl}
               alt={selectedItem.altText}
               fill
-              unoptimized
               priority
               sizes="(min-width: 768px) 75vw, 100vw"
+              quality={92}
               className="portfolio-lightbox-image object-contain"
               style={{ objectPosition: selectedItem.imagePosition }}
             />
@@ -1064,7 +1066,7 @@ function PortfolioLightbox({
             </button>
           </div>
 
-          <aside className="relative flex flex-col justify-between bg-[#241B16] p-6 sm:p-8 md:p-9">
+          <aside className="relative flex flex-col justify-between bg-[var(--color-text-strong)] p-6 sm:p-8 md:p-9">
             <Dialog.Close asChild>
               <button
                 type="button"
@@ -1077,7 +1079,7 @@ function PortfolioLightbox({
             </Dialog.Close>
 
             <div className="pt-14 md:pt-20">
-              <p className="text-[0.7rem] font-extrabold uppercase tracking-[0.16em] text-[#D8A986]">
+              <p className="text-[0.7rem] font-extrabold uppercase tracking-[0.16em] text-[var(--color-brand-primary)]">
                 {portfolioCategoryLabels[selectedItem.category]}
               </p>
               <Dialog.Title

@@ -15,6 +15,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { clsx } from "clsx";
+import { PremiumAction } from "@/components/ui/premium-action";
 
 export type BookingWidgetStatus =
   | "loading"
@@ -226,10 +227,11 @@ export function BookingSection({
     <section
       ref={sectionRef}
       id="agendamento"
+      role="region"
       aria-labelledby="agendamento-titulo"
       className={clsx(
         nunitoClassName,
-        "booking-section relative overflow-clip bg-[#FBF8F3] px-6 py-24 text-[#241C17] md:px-10 md:py-28 xl:px-[clamp(48px,5vw,88px)] xl:py-[clamp(120px,10vw,184px)]",
+        "booking-section relative overflow-clip bg-[var(--color-background-alt)] px-6 py-24 text-[var(--color-text-strong)] md:px-10 md:py-28 xl:px-[clamp(48px,5vw,88px)] xl:py-[clamp(120px,10vw,184px)]",
       )}
     >
       <span
@@ -237,7 +239,7 @@ export function BookingSection({
         aria-hidden="true"
         className={clsx(
           frauncesClassName,
-          "pointer-events-none absolute -left-4 top-4 select-none text-[170px] font-normal leading-none text-[#B0896C]/[0.045] md:text-[250px] xl:-left-8 xl:text-[360px]",
+          "pointer-events-none absolute -left-4 top-4 hidden select-none text-[250px] font-normal leading-none text-[var(--color-brand-primary)]/[0.045] md:block xl:-left-8 xl:text-[360px]",
         )}
       >
         AGENDAR
@@ -280,18 +282,18 @@ function BookingIntro({
     <div className="booking-intro max-w-[700px]">
       <div
         data-booking-eyebrow
-        className="flex items-center gap-3 text-xs font-extrabold uppercase text-[#A86143]"
+        className="flex items-center gap-3 text-xs font-extrabold uppercase text-[var(--color-brand-primary)]"
       >
         <Sparkles className="size-4" aria-hidden="true" />
         <span>Agendamento</span>
-        <span className="h-px w-12 bg-[#CBAA94]" aria-hidden="true" />
+        <span className="h-px w-12 bg-[var(--color-brand-primary)]" aria-hidden="true" />
       </div>
 
       <h2
         id="agendamento-titulo"
         className={clsx(
           frauncesClassName,
-          "mt-7 text-[42px] font-normal leading-[0.97] tracking-normal text-[#241C17] sm:text-[60px] lg:text-[70px] xl:text-[78px]",
+          "mt-7 text-[42px] font-normal leading-[0.97] tracking-normal text-[var(--color-text-strong)] sm:text-[60px] lg:text-[70px] xl:text-[78px]",
         )}
       >
         <span className="block overflow-hidden pb-1">
@@ -302,34 +304,38 @@ function BookingIntro({
         </span>
         <span className="block overflow-hidden pb-1">
           <span data-booking-headline-line className="block">
-            horário <em className="font-normal text-[#C4613F]">só seu.</em>
+            horário <em className="font-normal text-[var(--color-brand-primary)]">só seu.</em>
           </span>
         </span>
       </h2>
 
       <p
         data-booking-supporting
-        className="mt-7 max-w-[540px] text-base font-semibold leading-7 text-[#746A62] sm:text-lg sm:leading-8"
+        className="mt-7 max-w-[540px] text-base font-semibold leading-7 text-[var(--color-text-muted)] sm:text-lg sm:leading-8"
       >
         Escolha o serviço, encontre um horário disponível e confirme seu atendimento.
       </p>
 
       <div className="mt-9 flex flex-col items-start gap-5">
-        <Link
-          data-booking-action
-          href={bookingPath}
-          className="group inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-md bg-[#C4613F] px-7 text-sm font-extrabold text-white shadow-[0_14px_30px_rgba(111,59,38,0.18)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#AA4F32] hover:shadow-[0_18px_36px_rgba(111,59,38,0.22)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#AA4F32] active:translate-y-0 active:scale-[0.985] sm:w-auto"
-        >
-          <CalendarDays className="size-5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
-          Ver horários disponíveis
-        </Link>
+        <PremiumAction asChild size="lg">
+          <Link
+            data-booking-action
+            prefetch={false}
+            href={bookingPath}
+            className="w-full sm:w-auto"
+          >
+            <CalendarDays data-premium-leading aria-hidden="true" />
+            <span>Ver horários disponíveis</span>
+            <ArrowRight data-premium-arrow aria-hidden="true" />
+          </Link>
+        </PremiumAction>
 
         <a
           data-booking-action
           href={whatsappHref}
           target="_blank"
           rel="noreferrer"
-          className="group inline-flex min-h-11 items-center gap-2.5 text-sm font-bold text-[#B3593D] underline decoration-[#D6A88F] underline-offset-[7px] transition-colors hover:text-[#963F2B] hover:decoration-[#963F2B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#B3593D]"
+          className="group inline-flex min-h-11 items-center gap-2.5 text-sm font-bold text-[var(--color-brand-primary)] underline decoration-[var(--color-brand-primary-border)] underline-offset-[7px] transition-colors hover:text-[var(--color-brand-primary-hover)] hover:decoration-[var(--color-brand-primary-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-brand-primary)]"
         >
           <MessageCircle className="size-5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
           <span>
@@ -347,8 +353,8 @@ function BookingSteps() {
       {bookingSteps.map((step, index) => (
         <li key={step.number} data-booking-step className="booking-step-item">
           <div className="shrink-0">
-            <p className="text-base font-extrabold text-[#C4613F]">{step.number}</p>
-            <p className="mt-1 text-sm font-extrabold text-[#3B2D25] sm:text-base">
+            <p className="text-base font-extrabold text-[var(--color-brand-primary)]">{step.number}</p>
+            <p className="mt-1 text-sm font-extrabold text-[var(--color-text-strong)] sm:text-base">
               {step.label}
             </p>
           </div>
@@ -433,21 +439,21 @@ function BookingWidgetState({
       role="status"
       aria-live="polite"
     >
-      <span className="grid size-14 place-items-center rounded-full bg-[#F4EADF] text-[#B45E40]">
+      <span className="grid size-14 place-items-center rounded-full bg-[var(--color-surface-warm)] text-[var(--color-brand-primary)]">
         <Icon
           className={clsx("size-6", status === "loading" && "animate-spin")}
           aria-hidden="true"
         />
       </span>
-      <h3 className="mt-6 text-xl font-extrabold text-[#30251F]">{content.title}</h3>
-      <p className="mt-3 max-w-md text-sm font-semibold leading-6 text-[#746A62]">
+      <h3 className="mt-6 text-xl font-extrabold text-[var(--color-text-strong)]">{content.title}</h3>
+      <p className="mt-3 max-w-md text-sm font-semibold leading-6 text-[var(--color-text-muted)]">
         {content.description}
       </p>
       {status === "error" && onRetry ? (
         <button
           type="button"
           onClick={onRetry}
-          className="mt-7 min-h-11 rounded-md border border-[#C4613F] px-5 text-sm font-extrabold text-[#A64C30] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#A64C30]"
+          className="mt-7 min-h-11 rounded-md border border-[var(--color-brand-primary)] px-5 text-sm font-extrabold text-[var(--color-brand-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-brand-primary)]"
         >
           Tentar novamente
         </button>
@@ -457,7 +463,7 @@ function BookingWidgetState({
           href={whatsappHref}
           target="_blank"
           rel="noreferrer"
-          className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-extrabold text-[#A64C30] underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#A64C30]"
+          className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-extrabold text-[var(--color-brand-primary)] underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-brand-primary)]"
         >
           <MessageCircle className="size-4" aria-hidden="true" />
           Falar no WhatsApp
@@ -487,13 +493,13 @@ export function BookingPreview({
         <span
           className={clsx(
             frauncesClassName,
-            "mx-auto grid size-14 place-items-center rounded-full border border-[#E1C1AE] text-lg font-bold text-[#B96C4C]",
+            "mx-auto grid size-14 place-items-center rounded-full border border-[var(--color-brand-primary-border)] text-lg font-bold text-[var(--color-brand-primary)]",
           )}
           aria-hidden="true"
         >
           KD
         </span>
-        <h3 className="mt-5 text-xl font-extrabold text-[#352820] sm:text-2xl">
+        <h3 className="mt-5 text-xl font-extrabold text-[var(--color-text-strong)] sm:text-2xl">
           Selecione uma data
         </h3>
       </div>
@@ -509,10 +515,10 @@ export function BookingPreview({
               aria-pressed={selected}
               onClick={() => setSelectedDate(date.day)}
               className={clsx(
-                "min-h-[92px] rounded-lg border bg-[#FFFDF9] px-3 py-4 text-center transition duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#C4613F]",
+                "min-h-[92px] rounded-lg border bg-[var(--color-surface)] px-3 py-4 text-center transition duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-brand-primary)]",
                 selected
-                  ? "border-[#C4613F]/75 bg-[#FFF7F1] text-[#B75234]"
-                  : "border-[#DCCFC4] text-[#493A31] hover:border-[#C4613F]/65 hover:text-[#B75234]",
+                  ? "border-[var(--color-brand-primary)]/75 bg-[var(--color-surface)] text-[var(--color-brand-primary)]"
+                  : "border-[var(--color-brand-primary-border)] text-[var(--color-text)] hover:border-[var(--color-brand-primary)]/65 hover:text-[var(--color-brand-primary)]",
               )}
             >
               <span className={clsx(frauncesClassName, "block text-3xl leading-none")}>{date.day}</span>
@@ -523,13 +529,13 @@ export function BookingPreview({
       </div>
 
       <div className="my-8 flex items-center gap-3" aria-hidden="true">
-        <span className="h-px flex-1 bg-[#E3D5CA]" />
-        <Sparkles className="size-4 text-[#C99C82]" />
-        <span className="h-px flex-1 bg-[#E3D5CA]" />
+        <span className="h-px flex-1 bg-[var(--color-brand-primary-border)]" />
+        <Sparkles className="size-4 text-[var(--color-brand-primary)]" />
+        <span className="h-px flex-1 bg-[var(--color-brand-primary-border)]" />
       </div>
 
       <div data-booking-preview-item>
-        <h3 className="text-center text-lg font-extrabold text-[#352820] sm:text-xl">
+        <h3 className="text-center text-lg font-extrabold text-[var(--color-text-strong)] sm:text-xl">
           Horários disponíveis
         </h3>
         <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -542,10 +548,10 @@ export function BookingPreview({
                 aria-pressed={selected}
                 onClick={() => setSelectedTime(time)}
                 className={clsx(
-                  "min-h-12 rounded-lg border px-3 text-sm font-extrabold transition duration-200 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[#C4613F]",
+                  "min-h-12 rounded-lg border px-3 text-sm font-extrabold transition duration-200 hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[var(--color-brand-primary)]",
                   selected
-                    ? "border-[#C4613F]/75 bg-[#FFF7F1] text-[#B75234]"
-                    : "border-[#DCCFC4] bg-[#FFFDF9] text-[#493A31] hover:border-[#C4613F]/65",
+                    ? "border-[var(--color-brand-primary)]/75 bg-[var(--color-surface)] text-[var(--color-brand-primary)]"
+                    : "border-[var(--color-brand-primary-border)] bg-[var(--color-surface)] text-[var(--color-text)] hover:border-[var(--color-brand-primary)]/65",
                 )}
               >
                 {time}
@@ -556,16 +562,15 @@ export function BookingPreview({
       </div>
 
       <div data-booking-preview-item className="mt-8 text-center">
-        <Link
-          href={bookingPath}
-          className="group mx-auto inline-flex min-h-14 w-full max-w-[330px] items-center justify-center gap-3 rounded-md bg-[#C4613F] px-7 text-sm font-extrabold text-white shadow-[0_12px_26px_rgba(111,59,38,0.16)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#AA4F32] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#AA4F32] active:translate-y-0"
-        >
-          Continuar no agendamento
-          <ArrowRight className="size-5 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true" />
-        </Link>
+        <PremiumAction asChild size="lg" fullWidth className="mx-auto max-w-[330px]">
+          <Link prefetch={false} href={bookingPath}>
+            <span>Continuar no agendamento</span>
+            <ArrowRight data-premium-arrow aria-hidden="true" />
+          </Link>
+        </PremiumAction>
         <p
           id="booking-preview-notice"
-          className="mx-auto mt-5 max-w-md text-xs font-semibold leading-5 text-[#887A70]"
+          className="mx-auto mt-5 max-w-md text-xs font-semibold leading-5 text-[var(--color-text-muted)]"
         >
           Prévia visual. Os horários reais serão carregados pelo sistema de agendamento.
         </p>

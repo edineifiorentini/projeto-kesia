@@ -25,7 +25,19 @@ const adapter = new PrismaPg({
 const prisma = new PrismaClient({ adapter });
 
 const businessSlug = "kesia-dutra-cabeleireira";
-const password = "@135LuccaDutra";
+
+function getSeedCredentials() {
+  const email = process.env.ADMIN_EMAIL?.trim().toLowerCase();
+  const password = process.env.ADMIN_PASSWORD;
+
+  if (!email || !password || password.length < 12) {
+    throw new Error(
+      "Configure ADMIN_EMAIL and an ADMIN_PASSWORD with at least 12 characters before running the seed.",
+    );
+  }
+
+  return { email, password };
+}
 
 async function resetDatabase() {
   await prisma.$transaction([
@@ -69,6 +81,7 @@ async function resetDatabase() {
 }
 
 async function main() {
+  const { email: adminEmail, password } = getSeedCredentials();
   await resetDatabase();
 
   const passwordHash = await hash(password, 10);
@@ -170,7 +183,7 @@ async function main() {
     data: {
       businessId: business.id,
       roleId: ownerRole.id,
-      email: "edineif@gmail.com",
+      email: adminEmail,
       passwordHash,
       name: "Marina Proprietaria",
       phone: "(11) 98888-1111",
@@ -637,12 +650,12 @@ async function main() {
       action: "seed",
       subject: "business",
       subjectId: business.id,
-      metadata: { demoPassword: password, bookingSlug: businessSlug },
+      metadata: { bookingSlug: businessSlug },
     },
   });
 
   console.log(`Seed concluido para ${business.name}`);
-  console.log(`Login demo: edineif@gmail.com / ${password}`);
+  console.log(`Login administrativo criado para ${adminEmail}`);
 }
 
 main()

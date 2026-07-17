@@ -7,19 +7,19 @@ services:
     env_file:
       - ../../.env
     environment:
-      WUZAPI_ADMIN_TOKEN: ${WUZAPI_ADMIN_TOKEN:-change-me-admin-token}
-      WUZAPI_GLOBAL_ENCRYPTION_KEY: ${WUZAPI_GLOBAL_ENCRYPTION_KEY:-change-me-32-byte-encryption-key}
-      WUZAPI_GLOBAL_HMAC_KEY: ${WUZAPI_WEBHOOK_SECRET:-change-me-wuzapi-webhook-secret-32chars}
+      WUZAPI_ADMIN_TOKEN: ${WUZAPI_ADMIN_TOKEN:?WUZAPI_ADMIN_TOKEN is required}
+      WUZAPI_GLOBAL_ENCRYPTION_KEY: ${WUZAPI_GLOBAL_ENCRYPTION_KEY:?WUZAPI_GLOBAL_ENCRYPTION_KEY is required}
+      WUZAPI_GLOBAL_HMAC_KEY: ${WUZAPI_WEBHOOK_SECRET:?WUZAPI_WEBHOOK_SECRET is required}
       WUZAPI_GLOBAL_WEBHOOK: ${WUZAPI_WEBHOOK_URL:-http://host.docker.internal:3000/api/webhooks/wuzapi}
       DB_USER: wuzapi
-      DB_PASSWORD: ${WUZAPI_POSTGRES_PASSWORD:-wuzapi-local-password}
+      DB_PASSWORD: ${WUZAPI_POSTGRES_PASSWORD:?WUZAPI_POSTGRES_PASSWORD is required}
       DB_NAME: wuzapi
       DB_HOST: db
       DB_PORT: 5432
       TZ: America/Sao_Paulo
       WEBHOOK_FORMAT: json
       SESSION_DEVICE_NAME: "Kesia Dutra Cabeleireira"
-      RABBITMQ_URL: amqp://wuzapi:wuzapi@rabbitmq:5672/
+      RABBITMQ_URL: amqp://${WUZAPI_RABBITMQ_USER:?WUZAPI_RABBITMQ_USER is required}:${WUZAPI_RABBITMQ_PASSWORD:?WUZAPI_RABBITMQ_PASSWORD is required}@rabbitmq:5672/
       RABBITMQ_QUEUE: whatsapp_events
     ports:
       - "8080:8080"
@@ -37,7 +37,7 @@ services:
     container_name: kesia-wuzapi-db
     environment:
       POSTGRES_USER: wuzapi
-      POSTGRES_PASSWORD: ${WUZAPI_POSTGRES_PASSWORD:-wuzapi-local-password}
+      POSTGRES_PASSWORD: ${WUZAPI_POSTGRES_PASSWORD:?WUZAPI_POSTGRES_PASSWORD is required}
       POSTGRES_DB: wuzapi
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U wuzapi"]
@@ -54,8 +54,8 @@ services:
     image: rabbitmq:3-management
     container_name: kesia-wuzapi-rabbitmq
     environment:
-      RABBITMQ_DEFAULT_USER: wuzapi
-      RABBITMQ_DEFAULT_PASS: wuzapi
+      RABBITMQ_DEFAULT_USER: ${WUZAPI_RABBITMQ_USER:?WUZAPI_RABBITMQ_USER is required}
+      RABBITMQ_DEFAULT_PASS: ${WUZAPI_RABBITMQ_PASSWORD:?WUZAPI_RABBITMQ_PASSWORD is required}
       RABBITMQ_DEFAULT_VHOST: /
     ports:
       - "5672:5672"

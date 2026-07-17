@@ -120,16 +120,16 @@ export function AboutKesiaSection({
           const separators = select<HTMLElement>("[data-about-separator]");
           const connectorLines = select<HTMLElement>("[data-about-connector-line]");
           const connectorDots = select<HTMLElement>("[data-about-connector-dot]");
-          const identity = select<HTMLElement>("[data-about-identity]");
 
-          gsap.set(eyebrow, { autoAlpha: 0, y: 18 });
+          // Keep the introduction readable when this section is opened via an anchor.
+          gsap.set(eyebrow, { autoAlpha: 1, y: 0 });
           gsap.set(eyebrowLine, {
-            scaleX: 0,
+            scaleX: 1,
             transformOrigin: "left center",
           });
-          gsap.set(headlineLines, { yPercent: 105 });
-          gsap.set(supporting, { autoAlpha: 0, y: 18 });
-          gsap.set(portrait, { autoAlpha: 0, y: 34, scale: 0.975 });
+          gsap.set(headlineLines, { yPercent: 0 });
+          gsap.set(supporting, { autoAlpha: 1, y: 0 });
+          gsap.set(portrait, { autoAlpha: 1, y: 0, scale: 1 });
           gsap.set(backgroundWord, { y: 14 });
           callouts.forEach((callout) => {
             gsap.set(callout, {
@@ -145,7 +145,6 @@ export function AboutKesiaSection({
           });
           gsap.set(connectorLines, { scaleX: 0 });
           gsap.set(connectorDots, { scale: 0 });
-          gsap.set(identity, { autoAlpha: 0, y: 16 });
 
           const timeline = gsap.timeline({
             defaults: { ease: "none" },
@@ -159,47 +158,6 @@ export function AboutKesiaSection({
           });
 
           timeline
-            .to(eyebrow, { autoAlpha: 1, y: 0, duration: 0.1 }, 0)
-            .to(
-              eyebrowLine,
-              {
-                scaleX: 1,
-                duration: 0.1,
-                transformOrigin: "left center",
-              },
-              0,
-            )
-            .to(
-              headlineLines,
-              {
-                yPercent: 0,
-                duration: 0.14,
-                stagger: 0.035,
-                ease: "power3.out",
-              },
-              0.035,
-            )
-            .to(
-              portrait,
-              {
-                autoAlpha: 1,
-                y: 0,
-                scale: 1,
-                duration: 0.16,
-                ease: "power3.out",
-              },
-              0.1,
-            )
-            .to(
-              supporting,
-              {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.13,
-                ease: "power3.out",
-              },
-              0.14,
-            )
             .to(backgroundWord, { y: -14, duration: 1 }, 0)
             .to(portrait, { scale: 1.015, duration: 0.66 }, 0.26);
 
@@ -276,18 +234,7 @@ export function AboutKesiaSection({
               );
           });
 
-          timeline
-            .to(callouts, { opacity: 0.9, duration: 0.1, stagger: 0.012 }, 0.86)
-            .to(
-              identity,
-              {
-                autoAlpha: 1,
-                y: 0,
-                duration: 0.12,
-                ease: "power3.out",
-              },
-              0.86,
-            );
+          timeline.to(callouts, { opacity: 0.9, duration: 0.1, stagger: 0.012 }, 0.86);
 
           return () => timeline.kill();
         },
@@ -329,16 +276,17 @@ export function AboutKesiaSection({
     <section
       ref={sectionRef}
       id="sobre"
+      role="region"
       aria-labelledby="sobre-kesia-titulo"
       className={clsx(
         nunitoClassName,
-        "about-kesia-scroll relative overflow-clip bg-[#FBFAF8] text-[#1D1A18] xl:h-[230svh] motion-reduce:xl:h-auto",
+        "about-kesia-scroll relative overflow-clip bg-[var(--color-background-alt)] text-[var(--color-text-strong)] xl:h-[230svh] motion-reduce:xl:h-auto",
       )}
     >
       <div className="about-kesia-sticky relative px-6 py-24 sm:px-8 md:py-28 xl:sticky xl:top-0 xl:h-svh xl:px-[clamp(32px,5vw,88px)] xl:py-[clamp(48px,6vh,84px)] motion-reduce:xl:static motion-reduce:xl:h-auto">
         <BackgroundEditorialWord frauncesClassName={frauncesClassName} />
 
-        <div className="relative z-10 mx-auto flex max-w-[1720px] flex-col gap-y-12 md:grid md:grid-cols-2 md:grid-rows-[auto_auto_auto_auto_auto] md:gap-x-10 md:gap-y-12 xl:h-full xl:grid-cols-[minmax(300px,0.82fr)_minmax(420px,1.05fr)_minmax(300px,0.82fr)] xl:grid-rows-[minmax(clamp(320px,46svh,390px),0.9fr)_88px_88px_minmax(120px,0.7fr)] xl:items-center xl:gap-x-[clamp(30px,4vw,76px)] xl:gap-y-2">
+        <div className="relative z-10 mx-auto flex max-w-[1720px] flex-col gap-y-12 md:grid md:grid-cols-2 md:grid-rows-[auto_auto_auto_auto] md:gap-x-10 md:gap-y-12 xl:h-full xl:grid-cols-[minmax(300px,0.82fr)_minmax(420px,1.05fr)_minmax(300px,0.82fr)] xl:grid-rows-[minmax(clamp(320px,46svh,390px),0.9fr)_88px_88px_minmax(120px,0.7fr)] xl:items-center xl:gap-x-[clamp(30px,4vw,76px)] xl:gap-y-2">
           <AboutKesiaIntro
             frauncesClassName={frauncesClassName}
             className="order-1 md:col-span-2 md:row-start-1 xl:col-span-1 xl:col-start-1 xl:row-start-1 xl:self-start"
@@ -361,10 +309,6 @@ export function AboutKesiaSection({
             ))}
           </ol>
 
-          <ProfessionalIdentity
-            frauncesClassName={frauncesClassName}
-            className="order-7 md:col-span-2 md:row-start-5 xl:col-span-1 xl:col-start-3 xl:row-start-4"
-          />
         </div>
       </div>
     </section>
@@ -383,14 +327,14 @@ function AboutKesiaIntro({
       <div
         data-about-eyebrow
         data-about-mobile-reveal
-        className="flex items-center gap-3 text-[0.68rem] font-extrabold uppercase leading-4 tracking-normal text-[#9A7E60] sm:text-xs"
+        className="flex items-center gap-3 text-[0.68rem] font-extrabold uppercase leading-4 tracking-normal text-[var(--color-brand-primary)] sm:text-xs"
       >
         <Sparkles className="size-4 shrink-0" aria-hidden="true" />
         <span>Sobre Késia</span>
         <span
           data-about-eyebrow-line
           aria-hidden="true"
-          className="h-px w-12 bg-[#B39474]/70"
+          className="h-px w-12 bg-[var(--color-brand-primary)]/70"
         />
       </div>
 
@@ -408,7 +352,7 @@ function AboutKesiaIntro({
               data-about-mobile-reveal
               className={clsx(
                 "block whitespace-nowrap",
-                line === "escuta." && "text-[#A58162]",
+                line === "escuta." && "text-[var(--color-brand-primary)]",
               )}
             >
               {line}
@@ -418,15 +362,15 @@ function AboutKesiaIntro({
       </h2>
 
       <div aria-hidden="true" className="mt-6 flex w-28 items-center xl:mt-4">
-        <span className="h-px flex-1 bg-[#B39474]/55" />
-        <Sparkles className="mx-2 size-3 text-[#B39474]" />
-        <span className="h-px flex-1 bg-[#B39474]/55" />
+        <span className="h-px flex-1 bg-[var(--color-brand-primary)]/55" />
+        <Sparkles className="mx-2 size-3 text-[var(--color-brand-primary)]" />
+        <span className="h-px flex-1 bg-[var(--color-brand-primary)]/55" />
       </div>
 
       <p
         data-about-supporting
         data-about-mobile-reveal
-        className="mt-5 max-w-[390px] text-[0.98rem] font-semibold leading-[1.7] text-[#716B66] sm:text-[1.05rem] xl:mt-4 xl:text-[0.9rem] xl:leading-[1.55]"
+        className="mt-5 max-w-[390px] text-[0.98rem] font-semibold leading-[1.7] text-[var(--color-text-muted)] sm:text-[1.05rem] xl:mt-4 xl:text-[0.9rem] xl:leading-[1.55]"
       >
         Conheço sua história, entendo seu estilo e crio uma beleza que realmente
         combina com você.
@@ -447,7 +391,7 @@ function KesiaPortrait({
       data-about-portrait
       data-about-mobile-reveal
       className={clsx(
-        "relative mx-auto aspect-[3/4] w-full max-w-[520px] overflow-hidden rounded-[16px] bg-[#F6F1EB] shadow-[0_28px_70px_rgba(53,39,29,0.07)] xl:h-full xl:max-h-[min(78svh,820px)] xl:max-w-[clamp(420px,36vw,680px)]",
+        "relative mx-auto aspect-[3/4] w-full max-w-[520px] overflow-hidden rounded-[16px] bg-[var(--color-surface-warm)] shadow-[var(--shadow-soft)] xl:h-full xl:max-h-[min(78svh,820px)] xl:max-w-[clamp(420px,36vw,680px)]",
         portrait.backgroundMode === "transparent" && "bg-transparent shadow-none",
         className,
       )}
@@ -458,13 +402,14 @@ function KesiaPortrait({
         width={portrait.width}
         height={portrait.height}
         sizes="(min-width: 1280px) 36vw, (min-width: 768px) 520px, calc(100vw - 48px)"
+        quality={92}
         loading="lazy"
         className="h-full w-full object-cover"
         style={{ objectPosition: portrait.focalPosition }}
       />
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-[12%] bg-gradient-to-t from-[#FBFAF8]/75 to-transparent"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[12%] bg-gradient-to-t from-[var(--color-background-alt)]/75 to-transparent"
       />
     </figure>
   );
@@ -490,7 +435,7 @@ function SpecialtyCallout({
       data-about-side={specialty.side}
       data-about-index={index}
       className={clsx(
-        "group relative grid min-h-[118px] grid-cols-[48px_1px_minmax(0,1fr)] items-center gap-x-4 border-t border-[rgba(105,78,58,0.18)] py-6 sm:grid-cols-[58px_1px_minmax(0,1fr)] sm:gap-x-5 xl:flex xl:h-full xl:min-h-0 xl:gap-2 xl:border-t-0 xl:py-1",
+        "group relative grid min-h-[118px] grid-cols-[48px_1px_minmax(0,1fr)] items-center gap-x-4 border-t border-[var(--color-border)] py-6 sm:grid-cols-[58px_1px_minmax(0,1fr)] sm:gap-x-5 xl:flex xl:h-full xl:min-h-0 xl:gap-2 xl:border-t-0 xl:py-1",
         className,
       )}
     >
@@ -500,7 +445,7 @@ function SpecialtyCallout({
         data-about-number
         className={clsx(
           frauncesClassName,
-          "shrink-0 text-[clamp(2.5rem,3.2vw,4rem)] font-normal leading-none tracking-normal text-[#B39474] xl:w-[clamp(58px,4vw,72px)]",
+          "shrink-0 text-[clamp(2.5rem,3.2vw,4rem)] font-normal leading-none tracking-normal text-[var(--color-brand-primary)] xl:w-[clamp(58px,4vw,72px)]",
         )}
         aria-hidden="true"
       >
@@ -510,7 +455,7 @@ function SpecialtyCallout({
       <span
         data-about-separator
         aria-hidden="true"
-        className="h-[76px] w-px shrink-0 bg-[rgba(105,78,58,0.22)] xl:h-16"
+        className="h-[76px] w-px shrink-0 bg-[var(--color-border-strong)] xl:h-16"
       />
 
       <span
@@ -525,12 +470,12 @@ function SpecialtyCallout({
         <span
           className={clsx(
             frauncesClassName,
-            "block text-[clamp(1.35rem,1.6vw,1.9rem)] font-normal leading-[1.1] tracking-normal text-[#292522] xl:text-[clamp(1.15rem,1.3vw,1.65rem)]",
+            "block text-[clamp(1.35rem,1.6vw,1.9rem)] font-normal leading-[1.1] tracking-normal text-[var(--color-text-strong)] xl:text-[clamp(1.15rem,1.3vw,1.65rem)]",
           )}
         >
           {specialty.title}
         </span>
-        <span className="mt-2 block max-w-[240px] text-sm font-semibold leading-6 text-[#716B66] xl:mt-1.5 xl:max-w-[220px] xl:text-[0.78rem] xl:leading-5">
+        <span className="mt-2 block max-w-[240px] text-sm font-semibold leading-6 text-[var(--color-text-muted)] xl:mt-1.5 xl:max-w-[220px] xl:text-[0.78rem] xl:leading-5">
           {specialty.description}
         </span>
       </span>
@@ -548,53 +493,17 @@ function SpecialtyConnector({ side }: { side: Specialty["side"] }) {
     >
       <span
         data-about-connector-line
-        className="h-px w-full bg-[rgba(179,148,116,0.88)] transition-transform duration-500 group-hover:scale-x-[1.06]"
+        className="h-px w-full bg-[var(--color-brand-primary-border)] transition-transform duration-500 group-hover:scale-x-[1.06]"
         style={{ transformOrigin: side === "left" ? "left center" : "right center" }}
       />
       <span
         data-about-connector-dot
         className={clsx(
-          "absolute top-1/2 size-1.5 -translate-y-1/2 rounded-full bg-[#B39474]",
+          "absolute top-1/2 size-1.5 -translate-y-1/2 rounded-full bg-[var(--color-brand-primary)]",
           side === "left" ? "right-0" : "left-0",
         )}
       />
     </span>
-  );
-}
-
-function ProfessionalIdentity({
-  frauncesClassName,
-  className,
-}: {
-  frauncesClassName: string;
-  className?: string;
-}) {
-  return (
-    <div
-      data-about-identity
-      data-about-mobile-reveal
-      className={clsx(
-        "max-w-[340px] pt-2 md:mx-auto md:text-center xl:mx-0 xl:max-w-[390px] xl:text-left",
-        className,
-      )}
-    >
-      <p
-        className={clsx(
-          frauncesClassName,
-          "whitespace-nowrap text-[clamp(2.3rem,3vw,3.8rem)] font-normal leading-none tracking-normal text-[#A58162]",
-        )}
-      >
-        Késia Dutra
-      </p>
-      <div aria-hidden="true" className="mt-4 flex w-52 items-center md:mx-auto xl:mx-0">
-        <span className="h-px flex-1 bg-[#B39474]/55" />
-        <Sparkles className="mx-2 size-3 text-[#B39474]" />
-        <span className="h-px flex-1 bg-[#B39474]/55" />
-      </div>
-      <p className="mt-4 max-w-[270px] text-[0.95rem] font-semibold leading-6 text-[#716B66]">
-        Especialista em penteados para noivas e celebrações.
-      </p>
-    </div>
   );
 }
 
@@ -609,7 +518,7 @@ function BackgroundEditorialWord({
       aria-hidden="true"
       className={clsx(
         frauncesClassName,
-        "pointer-events-none absolute left-1/2 top-[46%] hidden -translate-x-1/2 -translate-y-1/2 select-none whitespace-nowrap text-[clamp(12rem,25vw,34rem)] font-normal leading-[0.72] tracking-normal text-[rgba(179,148,116,0.045)] xl:block",
+        "pointer-events-none absolute left-1/2 top-[46%] hidden -translate-x-1/2 -translate-y-1/2 select-none whitespace-nowrap text-[clamp(12rem,25vw,34rem)] font-normal leading-[0.72] tracking-normal text-[var(--color-brand-watermark)] xl:block",
       )}
     >
       KÉSIA

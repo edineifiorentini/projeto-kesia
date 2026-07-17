@@ -6,6 +6,7 @@ import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
+  ArrowRight,
   CalendarDays,
   Clock3,
   Heart,
@@ -15,6 +16,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { clsx } from "clsx";
+import { PremiumAction } from "@/components/ui/premium-action";
 
 export type FinalCTAImageData = {
   src: string;
@@ -202,7 +204,7 @@ export function FinalBookingCTASection({
       aria-labelledby="cta-final-titulo"
       className={clsx(
         nunitoClassName,
-        "relative overflow-clip bg-[#FBF8F3] px-6 py-[88px] text-[#281F1A] max-[359px]:px-5 md:px-10 md:py-[110px] xl:px-[clamp(48px,5vw,88px)] xl:py-[clamp(110px,9vw,174px)]",
+        "relative overflow-clip bg-[var(--color-background)] px-6 py-[88px] text-[var(--color-text-strong)] max-[359px]:px-5 md:px-10 md:py-[110px] xl:px-[clamp(48px,5vw,88px)] xl:py-[clamp(110px,9vw,174px)]",
       )}
     >
       <div className="final-booking-cta-grid mx-auto max-w-[1720px]">
@@ -230,7 +232,7 @@ function FinalCTAContent({
     <div className="max-w-[720px]">
       <div
         data-final-cta-eyebrow
-        className="inline-flex min-h-11 items-center gap-2.5 rounded-full border border-[#DDA88F] px-5 text-xs font-extrabold uppercase text-[#B64F31]"
+        className="inline-flex min-h-11 items-center gap-2.5 rounded-full border border-[var(--color-brand-primary)] px-5 text-xs font-extrabold uppercase text-[var(--color-brand-primary)]"
       >
         <Sparkles className="size-4" aria-hidden="true" />
         <span>Seu momento</span>
@@ -241,7 +243,7 @@ function FinalCTAContent({
         aria-label="O seu grande momento merece começar com calma."
         className={clsx(
           frauncesClassName,
-          "mt-8 text-[28px] font-normal leading-[0.97] tracking-normal text-[#281F1A] min-[360px]:text-[32px] sm:text-[60px] lg:text-[70px] xl:text-[58px] 2xl:text-[68px]",
+          "mt-8 text-[28px] font-normal leading-[0.97] tracking-normal text-[var(--color-text-strong)] min-[360px]:text-[32px] sm:text-[60px] lg:text-[70px] xl:text-[58px] 2xl:text-[68px]",
         )}
       >
         <span className="block overflow-hidden pb-1">
@@ -257,7 +259,7 @@ function FinalCTAContent({
 
       <p
         data-final-cta-supporting
-        className="mt-7 max-w-[590px] text-base font-semibold leading-7 text-[#746A62] sm:text-lg sm:leading-8"
+        className="mt-7 max-w-[590px] text-base font-semibold leading-7 text-[var(--color-text-muted)] sm:text-lg sm:leading-8"
       >
         Escolha seu horário e viva um atendimento pensado para valorizar seu estilo,
         sua ocasião e a sua história.
@@ -266,21 +268,20 @@ function FinalCTAContent({
       <FinalCTABenefits />
 
       <div className="mt-10 flex flex-col items-start gap-5">
-        <Link
-          data-final-cta-action
-          href={bookingPath}
-          className="group inline-flex min-h-[60px] w-full max-w-[480px] items-center justify-center gap-3 rounded-md bg-[#C95C37] px-8 text-base font-extrabold text-white shadow-[0_14px_30px_rgba(111,59,38,0.18)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#AE492B] hover:shadow-[0_18px_38px_rgba(111,59,38,0.22)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#AE492B] active:translate-y-0 active:scale-[0.985]"
-        >
-          <CalendarDays className="size-5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
-          Escolher meu horário
-        </Link>
+        <PremiumAction asChild size="lg" fullWidth className="max-w-[480px]">
+          <Link data-final-cta-action prefetch={false} href={bookingPath}>
+            <CalendarDays data-premium-leading aria-hidden="true" />
+            <span>Escolher meu horário</span>
+            <ArrowRight data-premium-arrow aria-hidden="true" />
+          </Link>
+        </PremiumAction>
 
         <a
           data-final-cta-action
           href={whatsappHref}
           target="_blank"
           rel="noreferrer"
-          className="group inline-flex min-h-11 items-center gap-2.5 text-sm font-bold text-[#77685F] underline decoration-[#CBA38D] underline-offset-[7px] transition-colors hover:text-[#9D422A] hover:decoration-[#9D422A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#B3593D]"
+          className="group inline-flex min-h-11 items-center gap-2.5 text-sm font-bold text-[var(--color-text-muted)] underline decoration-[var(--color-brand-primary)] underline-offset-[7px] transition-colors hover:text-[var(--color-brand-primary)] hover:decoration-[var(--color-brand-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-brand-primary)]"
         >
           <MessageCircle className="size-5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
           <span>
@@ -299,10 +300,10 @@ function FinalCTABenefits() {
         const Icon = benefit.icon;
         return (
           <li key={benefit.id} data-final-cta-benefit className="final-cta-benefit-item group">
-            <span className="grid size-12 shrink-0 place-items-center rounded-full bg-[#F3E9DF] text-[#C15B39] transition duration-500 group-hover:-translate-y-0.5 group-hover:text-[#A8462B]">
+            <span className="grid size-12 shrink-0 place-items-center rounded-full bg-[var(--color-surface-warm)] text-[var(--color-brand-primary)] transition duration-500 group-hover:-translate-y-0.5 group-hover:text-[var(--color-brand-primary)]">
               <Icon className="size-5" strokeWidth={1.6} aria-hidden="true" />
             </span>
-            <span className="text-sm font-bold leading-6 text-[#66574F]">
+            <span className="text-sm font-bold leading-6 text-[var(--color-text)]">
               {benefit.text}
             </span>
           </li>
@@ -326,6 +327,7 @@ function FinalCTAImage({ image }: { image: FinalCTAImageData }) {
             fill
             priority={image.priority}
             sizes="(min-width: 1100px) 50vw, (min-width: 768px) 86vw, 100vw"
+            quality={92}
             className="object-cover"
             style={{ objectPosition: image.objectPosition }}
           />

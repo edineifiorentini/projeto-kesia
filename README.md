@@ -22,18 +22,14 @@ pnpm db:seed
 pnpm dev
 ```
 
-Credencial demo criada pelo seed:
-
-```text
-edineif@gmail.com
-@135LuccaDutra
-```
-
-Essas credenciais tambem podem ser configuradas no `.env`:
+As credenciais administrativas devem existir somente no `.env` local ou no
+gerenciador de segredos da hospedagem:
 
 ```bash
-ADMIN_EMAIL="edineif@gmail.com"
-ADMIN_PASSWORD="@135LuccaDutra"
+ADMIN_EMAIL=""
+ADMIN_PASSWORD=""
+# Em produção, prefira um hash bcrypt e remova ADMIN_PASSWORD:
+ADMIN_PASSWORD_HASH=""
 ```
 
 ## Rotas principais
@@ -153,12 +149,14 @@ Preencha no `.env`:
 WHATSAPP_PROVIDER="wuzapi"
 WUZAPI_BASE_URL="http://localhost:8080"
 WUZAPI_WEBHOOK_URL="http://host.docker.internal:3000/api/webhooks/wuzapi"
-WUZAPI_ADMIN_TOKEN="change-me-admin-token"
+WUZAPI_ADMIN_TOKEN=""
 WUZAPI_INSTANCE_NAME="kesia-dutra-cabeleireira"
-WUZAPI_SESSION_TOKEN="kesia-dutra-whatsapp-session-token"
-WUZAPI_GLOBAL_ENCRYPTION_KEY="change-me-32-byte-encryption-key"
-WUZAPI_WEBHOOK_SECRET="change-me-wuzapi-webhook-secret-32chars"
-WUZAPI_POSTGRES_PASSWORD="wuzapi-local-password"
+WUZAPI_SESSION_TOKEN=""
+WUZAPI_GLOBAL_ENCRYPTION_KEY=""
+WUZAPI_WEBHOOK_SECRET=""
+WUZAPI_POSTGRES_PASSWORD=""
+WUZAPI_RABBITMQ_USER=""
+WUZAPI_RABBITMQ_PASSWORD=""
 ```
 
 Quando a WuzAPI roda em Docker no Windows, `host.docker.internal` permite que o container envie webhooks para o app Next.js rodando em `localhost:3000`.
@@ -191,6 +189,22 @@ NEXT_PUBLIC_BASE_PATH=/projeto-kesia pnpm pages:export
 ```
 
 O painel administrativo, APIs, Mercado Pago, Google Calendar e WuzAPI precisam de hospedagem com servidor Node.js para funcionar online.
+
+## Vercel
+
+O projeto está preparado para deploy do Next.js diretamente a partir da branch `main`. Na configuração do projeto na Vercel, use:
+
+- **Framework Preset:** Next.js
+- **Root Directory:** raiz do repositório, onde está o `package.json`
+- **Install Command:** `pnpm install --frozen-lockfile`
+- **Build Command:** `pnpm build`
+- **Output Directory:** deixe em branco para o Next.js gerenciar
+
+O `postinstall` e o comando de build executam `prisma generate`, garantindo que o Prisma Client exista mesmo quando a Vercel reutilizar o cache de dependências.
+
+Configure pelo menos `DATABASE_URL` e um `AUTH_SECRET` aleatório com 32 caracteres ou mais em **Settings > Environment Variables**. Para o painel, configure também `ADMIN_EMAIL` e `ADMIN_PASSWORD_HASH`. As demais integrações usam as variáveis documentadas em `.env.example`.
+
+Se novos commits da `main` não iniciarem um deploy, confirme em **Settings > Git** se o repositório `edineifiorentini/projeto-kesia` está conectado e se a Production Branch é `main`.
 
 ## Próximos passos naturais
 

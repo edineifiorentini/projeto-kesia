@@ -2,9 +2,10 @@
 
 import { useRef, useState, type KeyboardEvent } from "react";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
-import { Headset, MessageCircle, Plus, Sparkles } from "lucide-react";
+import { ArrowRight, Headset, MessageCircle, Plus, Sparkles } from "lucide-react";
 import { clsx } from "clsx";
 import { faqItems, type FAQItemData } from "@/lib/faq-data";
+import { PremiumAction } from "@/components/ui/premium-action";
 
 type FAQSectionProps = {
   frauncesClassName: string;
@@ -45,7 +46,7 @@ export function FAQSection({
       aria-labelledby="faq-title"
       className={clsx(
         nunitoClassName,
-        "relative overflow-clip bg-[#FBF8F3] px-6 py-[92px] text-[#281F1A] max-[359px]:px-5 md:px-10 md:py-[118px] xl:px-[clamp(48px,5vw,88px)] xl:py-[clamp(120px,9vw,180px)]",
+        "relative overflow-clip bg-[var(--color-surface)] px-6 py-[92px] text-[var(--color-text-strong)] max-[359px]:px-5 md:px-10 md:py-[118px] xl:px-[clamp(48px,5vw,88px)] xl:py-[clamp(120px,9vw,180px)]",
       )}
     >
       <span id="duvidas" className="pointer-events-none absolute left-0 top-0" aria-hidden="true" />
@@ -94,7 +95,7 @@ function FAQIntro({
     <div className="faq-intro max-w-[640px]">
       <motion.p
         {...reveal(0)}
-        className="inline-flex min-h-11 items-center gap-2 rounded-md border border-[#D88969] px-4 text-xs font-extrabold uppercase text-[#B64F31]"
+        className="inline-flex min-h-11 items-center gap-2 rounded-md border border-[var(--color-brand-primary-border)] px-4 text-xs font-extrabold uppercase text-[var(--color-brand-primary)]"
       >
         <span aria-hidden="true">{"//"}</span>
         Dúvidas
@@ -105,7 +106,7 @@ function FAQIntro({
         aria-label="Tudo o que você precisa saber antes do seu momento."
         className={clsx(
           frauncesClassName,
-          "mt-8 text-[34px] font-normal leading-[0.96] tracking-normal text-[#281F1A] min-[375px]:text-[38px] sm:text-[52px] lg:text-[60px] xl:text-[46px] min-[1440px]:text-[54px] min-[1800px]:text-[64px]",
+          "mt-8 text-[34px] font-normal leading-[0.96] tracking-normal text-[var(--color-text-strong)] min-[375px]:text-[38px] sm:text-[52px] lg:text-[60px] xl:text-[46px] min-[1440px]:text-[54px] min-[1800px]:text-[64px]",
         )}
       >
         {[
@@ -138,7 +139,7 @@ function FAQIntro({
 
       <motion.p
         {...reveal(0.38)}
-        className="mt-8 max-w-[460px] text-base font-semibold leading-7 text-[#746A62] sm:text-lg sm:leading-8"
+        className="mt-8 max-w-[460px] text-base font-semibold leading-7 text-[var(--color-text-muted)] sm:text-lg sm:leading-8"
       >
         Respostas para você agendar com mais segurança, clareza e tranquilidade.
       </motion.p>
@@ -167,28 +168,26 @@ function FAQSupportBlock({
       }
     >
       <div className="flex items-center gap-5">
-        <span className="grid size-[74px] shrink-0 place-items-center rounded-full border border-[#D9A78F] text-[#C3613E]">
+        <span className="grid size-[74px] shrink-0 place-items-center rounded-full border border-[var(--color-brand-primary-border)] text-[var(--color-brand-primary)]">
           <Headset className="size-8" strokeWidth={1.35} aria-hidden="true" />
         </span>
         <div>
-          <h3 className="text-base font-extrabold text-[#3D3029]">
+          <h3 className="text-base font-extrabold text-[var(--color-text-strong)]">
             Sua dúvida não está aqui?
           </h3>
-          <p className="mt-2 text-sm font-semibold leading-6 text-[#746A62] sm:text-base">
+          <p className="mt-2 text-sm font-semibold leading-6 text-[var(--color-text-muted)] sm:text-base">
             Fale diretamente com a Késia e receba uma orientação personalizada.
           </p>
         </div>
       </div>
 
-      <a
-        href={href}
-        target="_blank"
-        rel="noreferrer"
-        className="mt-7 inline-flex min-h-[56px] items-center justify-center gap-3 rounded-md bg-[#C3613E] px-7 text-sm font-extrabold text-white shadow-[0_14px_30px_rgba(111,59,38,0.16)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#A84D30] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#A84D30] active:translate-y-0"
-      >
-        <MessageCircle className="size-5" aria-hidden="true" />
-        Falar com a Késia
-      </a>
+      <PremiumAction asChild size="md" className="mt-7">
+        <a href={href} target="_blank" rel="noreferrer">
+          <MessageCircle data-premium-leading aria-hidden="true" />
+          <span>Falar com a Késia</span>
+          <ArrowRight data-premium-arrow aria-hidden="true" />
+        </a>
+      </PremiumAction>
     </motion.div>
   );
 }

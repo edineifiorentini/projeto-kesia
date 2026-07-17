@@ -263,15 +263,20 @@ export class WuzApiClient {
 }
 
 export function createWuzApiClientFromEnv() {
+  const baseUrl = process.env.WUZAPI_BASE_URL;
+  const sessionToken = process.env.WUZAPI_SESSION_TOKEN;
+  const adminToken = process.env.WUZAPI_ADMIN_TOKEN;
+
+  if (!baseUrl || !sessionToken || !adminToken) {
+    throw new Error("WuzAPI is not configured.");
+  }
+
   return new WuzApiClient({
-    baseUrl: process.env.WUZAPI_BASE_URL ?? "http://localhost:8080",
-    sessionToken:
-      process.env.WUZAPI_SESSION_TOKEN ?? "kesia-dutra-whatsapp-session-token",
-    adminToken: process.env.WUZAPI_ADMIN_TOKEN ?? "change-me-admin-token",
+    baseUrl,
+    sessionToken,
+    adminToken,
     instanceName: process.env.WUZAPI_INSTANCE_NAME ?? "kesia-dutra-cabeleireira",
-    webhookUrl:
-      process.env.WUZAPI_WEBHOOK_URL ??
-      "http://host.docker.internal:3000/api/webhooks/wuzapi",
+    webhookUrl: process.env.WUZAPI_WEBHOOK_URL ?? "",
     webhookSecret: process.env.WUZAPI_WEBHOOK_SECRET ?? "",
   });
 }

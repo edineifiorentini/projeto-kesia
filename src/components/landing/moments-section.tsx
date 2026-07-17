@@ -4,8 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Sparkles } from "lucide-react";
+import { ArrowRight, MessageCircle, Sparkles } from "lucide-react";
 import { clsx } from "clsx";
+import { PremiumAction } from "@/components/ui/premium-action";
 
 type MomentsSectionProps = {
   frauncesClassName: string;
@@ -254,10 +255,11 @@ export function MomentsSection({
     <section
       ref={sectionRef}
       id="momentos"
+      role="region"
       aria-labelledby="momentos-titulo"
       className={clsx(
         nunitoClassName,
-        "relative overflow-clip bg-[#FBF8F3] px-6 py-[92px] text-[#241C17] md:px-10 md:py-[110px] min-[1200px]:px-[clamp(48px,5vw,88px)] min-[1200px]:py-[clamp(110px,9vw,180px)]",
+        "relative overflow-clip bg-[var(--color-surface)] px-6 py-[92px] text-[var(--color-text-strong)] md:px-10 md:py-[110px] min-[1200px]:px-[clamp(48px,5vw,88px)] min-[1200px]:py-[clamp(110px,9vw,180px)]",
       )}
     >
       <div className="mx-auto max-w-[1640px]">
@@ -265,14 +267,14 @@ export function MomentsSection({
           <div
             data-moments-eyebrow
             data-moments-mobile-intro
-            className="flex items-center gap-3 text-[0.72rem] font-extrabold uppercase leading-4 tracking-[0.22em] text-[#A87955]"
+            className="flex items-center gap-3 text-[0.72rem] font-extrabold uppercase leading-4 tracking-[0.22em] text-[var(--color-brand-primary)]"
           >
             <Sparkles className="size-4 shrink-0" aria-hidden="true" />
             <span>Para cada momento</span>
             <span
               data-moments-eyebrow-line
               aria-hidden="true"
-              className="h-px w-12 bg-[#A87955]/60"
+              className="h-px w-12 bg-[var(--color-brand-primary)]/60"
             />
           </div>
 
@@ -291,7 +293,7 @@ export function MomentsSection({
             </span>
             <span className="block overflow-hidden pb-[0.09em]">
               <span data-moments-headline-line className="block">
-                beleza que <em className="font-normal text-[#6D4B36]">faça sentido para você.</em>
+                beleza que <em className="font-normal text-[var(--color-text)]">faça sentido para você.</em>
               </span>
             </span>
           </h2>
@@ -299,7 +301,7 @@ export function MomentsSection({
           <p
             data-moments-supporting
             data-moments-mobile-intro
-            className="mt-5 max-w-[610px] text-[1rem] font-semibold leading-7 text-[#746A62] md:text-[1.08rem]"
+            className="mt-5 max-w-[610px] text-[1rem] font-semibold leading-7 text-[var(--color-text-muted)] md:text-[1.08rem]"
           >
             Mais do que escolher um penteado, é sobre encontrar o estilo que representa seu momento.
           </p>
@@ -330,7 +332,7 @@ export function MomentsSection({
                 onFocus={() => setActiveIndex(index)}
                 onBlur={() => setActiveIndex(null)}
                 className={clsx(
-                  "moment-panel group relative isolate min-h-[480px] min-w-0 overflow-hidden rounded-[16px] bg-[#E8D9CC] shadow-[0_18px_55px_rgba(58,38,24,0.06)] outline-none focus-visible:ring-2 focus-visible:ring-[#A87955] focus-visible:ring-offset-4 focus-visible:ring-offset-[#FBF8F3] md:min-h-[520px]",
+                  "moment-panel group relative isolate min-h-[480px] min-w-0 overflow-hidden rounded-[16px] bg-[var(--color-background-alt)] shadow-[var(--shadow-soft)] outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand-primary)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--color-surface)] md:min-h-[520px]",
                 )}
               >
                 <div
@@ -344,7 +346,7 @@ export function MomentsSection({
                     height={moment.image.height}
                     sizes="(min-width: 1100px) 34vw, (min-width: 768px) 50vw, 100vw"
                     quality={92}
-                    loading={index === 0 ? "eager" : "lazy"}
+                    loading="lazy"
                     className="moment-panel-image h-full w-full object-cover"
                     style={{ objectPosition: moment.image.position }}
                   />
@@ -352,19 +354,19 @@ export function MomentsSection({
 
                 <div
                   aria-hidden="true"
-                  className="absolute inset-0 z-[1] bg-[linear-gradient(to_bottom,rgba(28,18,13,0.01)_25%,rgba(28,18,13,0.10)_54%,rgba(28,18,13,0.76)_100%)]"
+                  className="absolute inset-0 z-[1] bg-[var(--gradient-image-overlay)]"
                 />
 
                 <div
                   data-moment-content
-                  className="moment-panel-content absolute inset-x-[clamp(22px,2.2vw,36px)] bottom-[clamp(24px,2.6vw,42px)] z-[2] max-w-[360px] text-[#FFFDF9]"
+                  className="moment-panel-content absolute inset-x-[clamp(22px,2.2vw,36px)] bottom-[clamp(24px,2.6vw,42px)] z-[2] max-w-[360px] text-[var(--color-surface)]"
                 >
-                  <p className="text-[0.76rem] font-extrabold uppercase leading-4 tracking-[0.1em] text-[#FFFDF9]/95">
+                  <p className="text-[0.76rem] font-extrabold uppercase leading-4 tracking-[0.1em] text-[var(--color-surface)]/95">
                     {moment.label}
                   </p>
                   <span
                     aria-hidden="true"
-                    className="moment-panel-line mt-3 block h-px w-7 bg-[#FFFDF9]/75"
+                    className="moment-panel-line mt-3 block h-px w-7 bg-[var(--color-surface)]/75"
                   />
                   <h3
                     id={`momento-${moment.id}-titulo`}
@@ -375,7 +377,7 @@ export function MomentsSection({
                   >
                     {moment.title}
                   </h3>
-                  <p className="moment-panel-description mt-3 max-w-[320px] text-[0.9rem] font-semibold leading-6 text-[#FFFDF9]/85">
+                  <p className="moment-panel-description mt-3 max-w-[320px] text-[0.9rem] font-semibold leading-6 text-[var(--color-surface)]/85">
                     {moment.description}
                   </p>
                 </div>
@@ -385,18 +387,20 @@ export function MomentsSection({
         </div>
 
         <div data-moments-cta className="mt-[clamp(34px,4vw,58px)] flex justify-center">
-          <a
-            href={whatsappHref(
-              whatsappPhone,
-              "Olá, Késia! Gostaria de conversar sobre o penteado para o meu momento especial.",
-            )}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex min-h-13 items-center justify-center gap-3 rounded-full bg-[#A87955] px-7 py-3 text-sm font-extrabold text-white shadow-[0_14px_32px_rgba(88,56,35,0.16)] transition-colors duration-300 hover:bg-[#936847] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#936847]"
-          >
-            <Sparkles className="size-4" aria-hidden="true" />
-            Conversar sobre meu momento
-          </a>
+          <PremiumAction asChild size="md">
+            <a
+              href={whatsappHref(
+                whatsappPhone,
+                "Olá, Késia! Gostaria de conversar sobre o penteado para o meu momento especial.",
+              )}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <MessageCircle data-premium-leading aria-hidden="true" />
+              <span>Conversar sobre meu momento</span>
+              <ArrowRight data-premium-arrow aria-hidden="true" />
+            </a>
+          </PremiumAction>
         </div>
       </div>
     </section>

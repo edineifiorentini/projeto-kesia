@@ -33,11 +33,7 @@ if (basePath) {
     .replaceAll('"/videos/', `"${basePath}/videos/`)
     .replaceAll("'/videos/", `'${basePath}/videos/`)
     .replaceAll('"/favicon.ico', `"${basePath}/favicon.ico`)
-    .replaceAll("'/favicon.ico", `'${basePath}/favicon.ico`)
-    .replaceAll('"/booking/', `"${basePath}/booking/`)
-    .replaceAll("'/booking/", `'${basePath}/booking/`)
-    .replaceAll('"/login"', `"${basePath}/login"`)
-    .replaceAll("'/login'", `'${basePath}/login'`);
+    .replaceAll("'/favicon.ico", `'${basePath}/favicon.ico`);
 }
 
 if (html.includes("/_next/image")) {

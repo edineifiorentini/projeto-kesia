@@ -7,6 +7,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { clsx } from "clsx";
+import { BrandLogo } from "@/components/brand/brand-logo";
 
 type SiteFooterProps = {
   businessName: string;
@@ -17,7 +18,6 @@ type SiteFooterProps = {
   instagramHandle: string;
   instagramUrl: string;
   address: string;
-  frauncesClassName: string;
   nunitoClassName: string;
 };
 
@@ -45,7 +45,6 @@ export function SiteFooter({
   instagramHandle,
   instagramUrl,
   address,
-  frauncesClassName,
   nunitoClassName,
 }: SiteFooterProps) {
   const currentYear = new Date().getFullYear();
@@ -76,18 +75,14 @@ export function SiteFooter({
     <footer
       className={clsx(
         nunitoClassName,
-        "site-footer bg-[#FBF8F3] px-6 pb-9 pt-[72px] text-[#281F1A] md:px-10 md:pb-11 md:pt-[88px] xl:px-[clamp(48px,5vw,88px)] xl:pt-[108px]",
+        "site-footer bg-[var(--color-background)] px-6 pb-9 pt-[72px] text-[var(--color-text-strong)] md:px-10 md:pb-11 md:pt-[88px] xl:px-[clamp(48px,5vw,88px)] xl:pt-[108px]",
       )}
     >
       <div className="mx-auto max-w-[1700px]">
         <div className="site-footer-main">
-          <FooterBrand
-            businessName={businessName}
-            professionalName={professionalName}
-            frauncesClassName={frauncesClassName}
-          />
+          <FooterBrand businessName={businessName} />
           <div className="site-footer-information">
-            <p className="max-w-[680px] text-base font-semibold leading-7 text-[#746A62] sm:text-lg">
+            <p className="max-w-[680px] text-base font-semibold leading-7 text-[var(--color-text-muted)] sm:text-lg">
               {description}
             </p>
             <FooterContactLinks contacts={contacts} />
@@ -100,26 +95,10 @@ export function SiteFooter({
   );
 }
 
-function FooterBrand({
-  businessName,
-  professionalName,
-  frauncesClassName,
-}: {
-  businessName: string;
-  professionalName: string;
-  frauncesClassName: string;
-}) {
+function FooterBrand({ businessName }: { businessName: string }) {
   return (
-    <div className="site-footer-brand" aria-label={businessName}>
-      <p
-        className={clsx(
-          frauncesClassName,
-          "text-[44px] font-normal leading-[0.95] tracking-normal text-[#3B2B24] sm:text-[56px] lg:text-[64px] xl:text-[68px]",
-        )}
-      >
-        <span className="block">{professionalName}</span>
-        <span className="block">Cabeleireira</span>
-      </p>
+    <div className="site-footer-brand">
+      <BrandLogo alt={businessName} className="h-auto w-full max-w-[290px]" />
     </div>
   );
 }
@@ -148,7 +127,6 @@ function FooterContactLinks({ contacts }: { contacts: FooterContact[] }) {
                 href={contact.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`${contact.label}: ${contact.value}`}
                 className="site-footer-contact-link"
               >
                 {content}
@@ -176,8 +154,9 @@ function FooterLegal({
     <div className="site-footer-legal">
       <p>© {currentYear} {professionalName}. Todos os direitos reservados.</p>
       <Link
+        prefetch={false}
         href="/login"
-        className="group inline-flex min-h-11 items-center gap-1.5 text-[#9A5A3F] transition-colors duration-200 hover:text-[#7F432D] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#B86A47]"
+        className="group inline-flex min-h-11 items-center gap-1.5 text-[var(--color-brand-primary)] transition-colors duration-200 hover:text-[var(--color-brand-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-brand-primary)]"
       >
         Área administrativa
         <ArrowRight className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true" />

@@ -34,9 +34,9 @@ const initialState: IntegrationState = {
   googleCalendarId: "primary",
   wuzApiBaseUrl: "http://localhost:8080",
   wuzApiInstanceName: "kesia-dutra-cabeleireira",
-  wuzApiAdminToken: "change-me-admin-token",
-  wuzApiSessionToken: "kesia-dutra-whatsapp-session-token",
-  wuzApiWebhookSecret: "change-me-wuzapi-webhook-secret-32chars",
+  wuzApiAdminToken: "",
+  wuzApiSessionToken: "",
+  wuzApiWebhookSecret: "",
 };
 
 function SecretField({

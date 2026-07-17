@@ -1,12 +1,27 @@
-import { NextResponse } from "next/server";
 import { createGoogleCalendarEvent } from "@/lib/integrations/google-calendar";
+import {
+  apiJson,
+  rejectCrossSiteMutation,
+  reportServerError,
+  requireApiSession,
+  requireJsonRequest,
+} from "@/lib/security/api";
 import { googleCalendarEventSchema } from "@/lib/validation/schemas";
 
 export async function POST(request: Request) {
-  const parsed = googleCalendarEventSchema.safeParse(await request.json());
+  const auth = await requireApiSession("appointments:manage");
+  if (auth.response) return auth.response;
+  const crossSite = rejectCrossSiteMutation(request);
+  if (crossSite) return crossSite;
+  const invalidType = requireJsonRequest(request);
+  if (invalidType) return invalidType;
+
+  const parsed = googleCalendarEventSchema.safeParse(
+    await request.json().catch(() => null),
+  );
 
   if (!parsed.success) {
-    return NextResponse.json({ error: "invalid_payload" }, { status: 400 });
+    return apiJson({ error: "invalid_payload" }, { status: 400 });
   }
 
   const { accessToken, calendarId, startsAt, endsAt, ...appointment } = parsed.data;
@@ -19,14 +34,9 @@ export async function POST(request: Request) {
       timezone: "America/Sao_Paulo",
     });
 
-    return NextResponse.json(event);
+    return apiJson(event);
   } catch (error) {
-    return NextResponse.json(
-      {
-        error: "google_calendar_unavailable",
-        message: error instanceof Error ? error.message : "Unknown error",
-      },
-      { status: 503 },
-    );
+    reportServerError("google-calendar-event", error);
+    return apiJson({ error: "google_calendar_unavailable" }, { status: 503 });
   }
 }

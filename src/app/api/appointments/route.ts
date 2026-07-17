@@ -1,7 +1,10 @@
-import { NextResponse } from "next/server";
-import { requirePermission } from "@/lib/auth/permissions";
-import { demoSession } from "@/lib/auth/session";
 import { canBookAppointment } from "@/lib/domain/scheduling";
+import {
+  apiJson,
+  rejectCrossSiteMutation,
+  requireApiSession,
+  requireJsonRequest,
+} from "@/lib/security/api";
 import { appointmentCreateSchema } from "@/lib/validation/schemas";
 
 const demoServices = [
@@ -32,16 +35,17 @@ const existingAppointments = [
 ];
 
 export async function POST(request: Request) {
-  try {
-    requirePermission(demoSession.role, "appointments:manage");
-  } catch {
-    return NextResponse.json({ error: "forbidden" }, { status: 403 });
-  }
+  const auth = await requireApiSession("appointments:manage");
+  if (auth.response) return auth.response;
+  const crossSite = rejectCrossSiteMutation(request);
+  if (crossSite) return crossSite;
+  const invalidType = requireJsonRequest(request);
+  if (invalidType) return invalidType;
 
-  const parsed = appointmentCreateSchema.safeParse(await request.json());
+  const parsed = appointmentCreateSchema.safeParse(await request.json().catch(() => null));
 
   if (!parsed.success) {
-    return NextResponse.json({ error: "invalid_payload" }, { status: 400 });
+    return apiJson({ error: "invalid_payload" }, { status: 400 });
   }
 
   const services = demoServices.filter((service) =>
@@ -56,10 +60,10 @@ export async function POST(request: Request) {
   });
 
   if (!decision.ok) {
-    return NextResponse.json({ error: decision.reason }, { status: 409 });
+    return apiJson({ error: decision.reason }, { status: 409 });
   }
 
-  return NextResponse.json({
+  return apiJson({
     status: "scheduled",
     startsAt: decision.startsAt,
     endsAt: decision.endsAt,
